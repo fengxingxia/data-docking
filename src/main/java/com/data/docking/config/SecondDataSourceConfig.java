@@ -26,7 +26,7 @@ import javax.sql.DataSource;
 public class SecondDataSourceConfig {
 
     /**
-     * 次数据源
+     * dahua数据源
      *
      * @return
      */
@@ -37,7 +37,7 @@ public class SecondDataSourceConfig {
     }
 
     /**
-     * 次数据源SQL session factory
+     * dahua数据源SQL session factory
      *
      * @param dataSource
      * @return
@@ -58,7 +58,7 @@ public class SecondDataSourceConfig {
     }
 
     /**
-     * 次数据与事务管理器
+     * dahua数据与事务管理器
      *
      * @param dataSource
      * @return
@@ -69,7 +69,7 @@ public class SecondDataSourceConfig {
     }
 
     /**
-     * 次数据源 sql template
+     * dahua数据源 sql template
      * @param sqlSessionFactory
      * @return
      */

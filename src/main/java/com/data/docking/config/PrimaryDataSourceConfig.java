@@ -26,7 +26,7 @@ import javax.sql.DataSource;
 public class PrimaryDataSourceConfig {
 
     /**
-     * 主数据源
+     * 第三方数据源
      * @return
      */
     @Bean(name = "primaryDataSource")
@@ -36,7 +36,7 @@ public class PrimaryDataSourceConfig {
     }
 
     /**
-     * 主数据源sql session factory
+     * 第三方数据源sql session factory
      *
      * @param dataSource
      * @return
@@ -57,7 +57,7 @@ public class PrimaryDataSourceConfig {
     }
 
     /**
-     * 主数据源事务管理器
+     * 第三方数据源事务管理器
      *
      * @param dataSource
      * @return
@@ -68,7 +68,7 @@ public class PrimaryDataSourceConfig {
     }
 
     /**
-     * 主数据源SQL template
+     * 第三方数据源SQL template
      *
      * @param sqlSessionFactory
      * @return
