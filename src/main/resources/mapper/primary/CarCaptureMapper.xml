@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.data.docking.mapper.CarCaptureMapper">
+
+    <resultMap id="BaseResultMap" type="com.data.docking.domain.CarCapture">
+        <result column="id" property="id"/>
+        <result column="dev_id" property="devId"/>
+        <result column="dev_chnid" property="devChnid"/>
+        <result column="dev_chnnum" property="devChnnum"/>
+        <result column="dev_name" property="devName"/>
+        <result column="dev_chnname" property="devChnname"/>
+        <result column="car_num" property="carNum"/>
+        <result column="car_numtype" property="carNumtype"/>
+        <result column="car_numcolor" property="carNumcolor"/>
+        <result column="car_speed" property="carSpeed"/>
+        <result column="car_type" property="carType"/>
+        <result column="car_color" property="carColor"/>
+        <result column="car_length" property="carLength"/>
+        <result column="car_direct" property="carDirect"/>
+        <result column="car_way_code" property="carWayCode"/>
+        <result column="car_brand" property="carBrand"/>
+        <result column="cap_time" property="capTime"/>
+        <result column="inf_note" property="infNote"/>
+        <result column="max_speed" property="maxSpeed"/>
+        <result column="min_speed" property="minSpeed"/>
+        <result column="car_img_url" property="carImgUrl"/>
+        <result column="car_num_pic" property="carNumPic"/>
+        <result column="rec_stat" property="recStat"/>
+        <result column="save_flag" property="saveFlag"/>
+        <result column="dc_cleanflag" property="dcCleanflag"/>
+        <result column="img_plate" property="imgPlate"/>
+        <result column="verify_memo" property="verifyMemo"/>
+        <result column="car_inner_category" property="carInnerCategory"/>
+        <result column="parking_lot_code" property="parkingLotCode"/>
+        <result column="enter_id" property="enterId"/>
+        <result column="parking_car_type" property="parkingCarType"/>
+        <result column="parking_car_sub_type" property="parkingCarSubType"/>
+        <result column="parking_car_cbirfeature" property="parkingCarCbirfeature"/>
+        <result column="vehicle_head_direction" property="vehicleHeadDirection"/>
+        <result column="parking_car_color" property="parkingCarColor"/>
+        <result column="parking_car_logo" property="parkingCarLogo"/>
+        <result column="sub_system_ip" property="subSystemIp"/>
+        <result column="sub_system_id" property="subSystemId"/>
+        <result column="strobe_state" property="strobeState"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id
+        ,
+                dev_id,
+                dev_chnid,
+                dev_chnnum,
+                dev_name,
+                dev_chnname,
+                car_num,
+                car_numtype,
+                car_numcolor,
+                car_speed,
+                car_type,
+                car_color,
+                car_length,
+                car_direct,
+                car_way_code,
+                car_brand,
+                cap_time,
+                inf_note,
+                max_speed,
+                min_speed,
+                car_img_url,
+                car_num_pic,
+                rec_stat,
+                save_flag,
+                dc_cleanflag,
+                img_plate,
+                verify_memo,
+                car_inner_category,
+                parking_lot_code,
+                enter_id,
+                parking_car_type,
+                parking_car_sub_type,
+                parking_car_cbirfeature,
+                vehicle_head_direction,
+                parking_car_color,
+                parking_car_logo,
+                sub_system_ip,
+                sub_system_id,
+                strobe_state
+    </sql>
+
+    <insert id="insert" useGeneratedKeys="true" keyColumn="id" keyProperty="id"
+            parameterType="www.bejson.com.entity.PCarCaptureEntity">
+        INSERT INTO p_car_capture
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="null != devId and '' != devId">
+                dev_id,
+            </if>
+            <if test="null != devChnid and '' != devChnid">
+                dev_chnid,
+            </if>
+            <if test="null != devChnnum and '' != devChnnum">
+                dev_chnnum,
+            </if>
+            <if test="null != devName and '' != devName">
+                dev_name,
+            </if>
+            <if test="null != devChnname and '' != devChnname">
+                dev_chnname,
+            </if>
+            <if test="null != carNum and '' != carNum">
+                car_num,
+            </if>
+            <if test="null != carNumtype and '' != carNumtype">
+                car_numtype,
+            </if>
+            <if test="null != carNumcolor and '' != carNumcolor">
+                car_numcolor,
+            </if>
+            <if test="null != carSpeed and '' != carSpeed">
+                car_speed,
+            </if>
+            <if test="null != carType and '' != carType">
+                car_type,
+            </if>
+            <if test="null != carColor and '' != carColor">
+                car_color,
+            </if>
+            <if test="null != carLength and '' != carLength">
+                car_length,
+            </if>
+            <if test="null != carDirect and '' != carDirect">
+                car_direct,
+            </if>
+            <if test="null != carWayCode and '' != carWayCode">
+                car_way_code,
+            </if>
+            <if test="null != carBrand and '' != carBrand">
+                car_brand,
+            </if>
+            <if test="null != capTime and '' != capTime">
+                cap_time,
+            </if>
+            <if test="null != infNote and '' != infNote">
+                inf_note,
+            </if>
+            <if test="null != maxSpeed and '' != maxSpeed">
+                max_speed,
+            </if>
+            <if test="null != minSpeed and '' != minSpeed">
+                min_speed,
+            </if>
+            <if test="null != carImgUrl and '' != carImgUrl">
+                car_img_url,
+            </if>
+            <if test="null != carNumPic and '' != carNumPic">
+                car_num_pic,
+            </if>
+            <if test="null != recStat and '' != recStat">
+                rec_stat,
+            </if>
+            <if test="null != saveFlag and '' != saveFlag">
+                save_flag,
+            </if>
+            <if test="null != dcCleanflag and '' != dcCleanflag">
+                dc_cleanflag,
+            </if>
+            <if test="null != imgPlate and '' != imgPlate">
+                img_plate,
+            </if>
+            <if test="null != verifyMemo and '' != verifyMemo">
+                verify_memo,
+            </if>
+            <if test="null != carInnerCategory and '' != carInnerCategory">
+                car_inner_category,
+            </if>
+            <if test="null != parkingLotCode and '' != parkingLotCode">
+                parking_lot_code,
+            </if>
+            <if test="null != enterId and '' != enterId">
+                enter_id,
+            </if>
+            <if test="null != parkingCarType and '' != parkingCarType">
+                parking_car_type,
+            </if>
+            <if test="null != parkingCarSubType and '' != parkingCarSubType">
+                parking_car_sub_type,
+            </if>
+            <if test="null != parkingCarCbirfeature and '' != parkingCarCbirfeature">
+                parking_car_cbirfeature,
+            </if>
+            <if test="null != vehicleHeadDirection and '' != vehicleHeadDirection">
+                vehicle_head_direction,
+            </if>
+            <if test="null != parkingCarColor and '' != parkingCarColor">
+                parking_car_color,
+            </if>
+            <if test="null != parkingCarLogo and '' != parkingCarLogo">
+                parking_car_logo,
+            </if>
+            <if test="null != subSystemIp and '' != subSystemIp">
+                sub_system_ip,
+            </if>
+            <if test="null != subSystemId and '' != subSystemId">
+                sub_system_id,
+            </if>
+            <if test="null != strobeState and '' != strobeState">
+                strobe_state
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="null != devId and '' != devId">
+                #{devId},
+            </if>
+            <if test="null != devChnid and '' != devChnid">
+                #{devChnid},
+            </if>
+            <if test="null != devChnnum and '' != devChnnum">
+                #{devChnnum},
+            </if>
+            <if test="null != devName and '' != devName">
+                #{devName},
+            </if>
+            <if test="null != devChnname and '' != devChnname">
+                #{devChnname},
+            </if>
+            <if test="null != carNum and '' != carNum">
+                #{carNum},
+            </if>
+            <if test="null != carNumtype and '' != carNumtype">
+                #{carNumtype},
+            </if>
+            <if test="null != carNumcolor and '' != carNumcolor">
+                #{carNumcolor},
+            </if>
+            <if test="null != carSpeed and '' != carSpeed">
+                #{carSpeed},
+            </if>
+            <if test="null != carType and '' != carType">
+                #{carType},
+            </if>
+            <if test="null != carColor and '' != carColor">
+                #{carColor},
+            </if>
+            <if test="null != carLength and '' != carLength">
+                #{carLength},
+            </if>
+            <if test="null != carDirect and '' != carDirect">
+                #{carDirect},
+            </if>
+            <if test="null != carWayCode and '' != carWayCode">
+                #{carWayCode},
+            </if>
+            <if test="null != carBrand and '' != carBrand">
+                #{carBrand},
+            </if>
+            <if test="null != capTime and '' != capTime">
+                #{capTime},
+            </if>
+            <if test="null != infNote and '' != infNote">
+                #{infNote},
+            </if>
+            <if test="null != maxSpeed and '' != maxSpeed">
+                #{maxSpeed},
+            </if>
+            <if test="null != minSpeed and '' != minSpeed">
+                #{minSpeed},
+            </if>
+            <if test="null != carImgUrl and '' != carImgUrl">
+                #{carImgUrl},
+            </if>
+            <if test="null != carNumPic and '' != carNumPic">
+                #{carNumPic},
+            </if>
+            <if test="null != recStat and '' != recStat">
+                #{recStat},
+            </if>
+            <if test="null != saveFlag and '' != saveFlag">
+                #{saveFlag},
+            </if>
+            <if test="null != dcCleanflag and '' != dcCleanflag">
+                #{dcCleanflag},
+            </if>
+            <if test="null != imgPlate and '' != imgPlate">
+                #{imgPlate},
+            </if>
+            <if test="null != verifyMemo and '' != verifyMemo">
+                #{verifyMemo},
+            </if>
+            <if test="null != carInnerCategory and '' != carInnerCategory">
+                #{carInnerCategory},
+            </if>
+            <if test="null != parkingLotCode and '' != parkingLotCode">
+                #{parkingLotCode},
+            </if>
+            <if test="null != enterId and '' != enterId">
+                #{enterId},
+            </if>
+            <if test="null != parkingCarType and '' != parkingCarType">
+                #{parkingCarType},
+            </if>
+            <if test="null != parkingCarSubType and '' != parkingCarSubType">
+                #{parkingCarSubType},
+            </if>
+            <if test="null != parkingCarCbirfeature and '' != parkingCarCbirfeature">
+                #{parkingCarCbirfeature},
+            </if>
+            <if test="null != vehicleHeadDirection and '' != vehicleHeadDirection">
+                #{vehicleHeadDirection},
+            </if>
+            <if test="null != parkingCarColor and '' != parkingCarColor">
+                #{parkingCarColor},
+            </if>
+            <if test="null != parkingCarLogo and '' != parkingCarLogo">
+                #{parkingCarLogo},
+            </if>
+            <if test="null != subSystemIp and '' != subSystemIp">
+                #{subSystemIp},
+            </if>
+            <if test="null != subSystemId and '' != subSystemId">
+                #{subSystemId},
+            </if>
+            <if test="null != strobeState and '' != strobeState">
+                #{strobeState}
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="delete">
+        DELETE
+        FROM p_car_capture
+        WHERE id = #{id}
+    </delete>
+
+    <update id="update" parameterType="www.bejson.com.entity.PCarCaptureEntity">
+        UPDATE p_car_capture
+        <set>
+            <if test="null != devId and '' != devId">dev_id = #{devId},</if>
+            <if test="null != devChnid and '' != devChnid">dev_chnid = #{devChnid},</if>
+            <if test="null != devChnnum and '' != devChnnum">dev_chnnum = #{devChnnum},</if>
+            <if test="null != devName and '' != devName">dev_name = #{devName},</if>
+            <if test="null != devChnname and '' != devChnname">dev_chnname = #{devChnname},</if>
+            <if test="null != carNum and '' != carNum">car_num = #{carNum},</if>
+            <if test="null != carNumtype and '' != carNumtype">car_numtype = #{carNumtype},</if>
+            <if test="null != carNumcolor and '' != carNumcolor">car_numcolor = #{carNumcolor},</if>
+            <if test="null != carSpeed and '' != carSpeed">car_speed = #{carSpeed},</if>
+            <if test="null != carType and '' != carType">car_type = #{carType},</if>
+            <if test="null != carColor and '' != carColor">car_color = #{carColor},</if>
+            <if test="null != carLength and '' != carLength">car_length = #{carLength},</if>
+            <if test="null != carDirect and '' != carDirect">car_direct = #{carDirect},</if>
+            <if test="null != carWayCode and '' != carWayCode">car_way_code = #{carWayCode},</if>
+            <if test="null != carBrand and '' != carBrand">car_brand = #{carBrand},</if>
+            <if test="null != capTime and '' != capTime">cap_time = #{capTime},</if>
+            <if test="null != infNote and '' != infNote">inf_note = #{infNote},</if>
+            <if test="null != maxSpeed and '' != maxSpeed">max_speed = #{maxSpeed},</if>
+            <if test="null != minSpeed and '' != minSpeed">min_speed = #{minSpeed},</if>
+            <if test="null != carImgUrl and '' != carImgUrl">car_img_url = #{carImgUrl},</if>
+            <if test="null != carNumPic and '' != carNumPic">car_num_pic = #{carNumPic},</if>
+            <if test="null != recStat and '' != recStat">rec_stat = #{recStat},</if>
+            <if test="null != saveFlag and '' != saveFlag">save_flag = #{saveFlag},</if>
+            <if test="null != dcCleanflag and '' != dcCleanflag">dc_cleanflag = #{dcCleanflag},</if>
+            <if test="null != imgPlate and '' != imgPlate">img_plate = #{imgPlate},</if>
+            <if test="null != verifyMemo and '' != verifyMemo">verify_memo = #{verifyMemo},</if>
+            <if test="null != carInnerCategory and '' != carInnerCategory">car_inner_category = #{carInnerCategory},
+            </if>
+            <if test="null != parkingLotCode and '' != parkingLotCode">parking_lot_code = #{parkingLotCode},</if>
+            <if test="null != enterId and '' != enterId">enter_id = #{enterId},</if>
+            <if test="null != parkingCarType and '' != parkingCarType">parking_car_type = #{parkingCarType},</if>
+            <if test="null != parkingCarSubType and '' != parkingCarSubType">parking_car_sub_type =
+                #{parkingCarSubType},
+            </if>
+            <if test="null != parkingCarCbirfeature and '' != parkingCarCbirfeature">parking_car_cbirfeature =
+                #{parkingCarCbirfeature},
+            </if>
+            <if test="null != vehicleHeadDirection and '' != vehicleHeadDirection">vehicle_head_direction =
+                #{vehicleHeadDirection},
+            </if>
+            <if test="null != parkingCarColor and '' != parkingCarColor">parking_car_color = #{parkingCarColor},</if>
+            <if test="null != parkingCarLogo and '' != parkingCarLogo">parking_car_logo = #{parkingCarLogo},</if>
+            <if test="null != subSystemIp and '' != subSystemIp">sub_system_ip = #{subSystemIp},</if>
+            <if test="null != subSystemId and '' != subSystemId">sub_system_id = #{subSystemId},</if>
+            <if test="null != strobeState and '' != strobeState">strobe_state = #{strobeState}</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+
+    <select id="load" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM p_car_capture
+        WHERE id = #{id}
+    </select>
+
+    <select id="pageList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM p_car_capture
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <select id="pageListCount" resultType="java.lang.Integer">
+        SELECT count(1)
+        FROM p_car_capture
+    </select>
+
+</mapper>

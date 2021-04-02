@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.data.docking.mapper.DataDockingRecordMapper">
+
+    <resultMap id="BaseResultMap" type="com.data.docking.domain.DataDockingRecord">
+        <result column="id" property="id"/>
+        <result column="type" property="type"/>
+        <result column="sync_record_position" property="syncRecordPosition"/>
+        <result column="latest_sync_time" property="latestSyncTime"/>
+        <result column="current_sync_num" property="currentSyncNum"/>
+        <result column="sync_total" property="syncTotal"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,
+        type,
+        sync_record_position,
+        latest_sync_time,
+        current_sync_num,
+        sync_total
+    </sql>
+
+    <insert id="insert" useGeneratedKeys="true" keyColumn="id" keyProperty="id"
+            parameterType="www.bejson.com.entity.DataDockingRecordEntity">
+        INSERT INTO data_docking_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="null != type and '' != type">
+                type,
+            </if>
+            <if test="null != syncRecordPosition and '' != syncRecordPosition">
+                sync_record_position,
+            </if>
+            <if test="null != latestSyncTime and '' != latestSyncTime">
+                latest_sync_time,
+            </if>
+            <if test="null != currentSyncNum and '' != currentSyncNum">
+                current_sync_num,
+            </if>
+            <if test="null != syncTotal and '' != syncTotal">
+                sync_total
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="null != type and '' != type">
+                #{type},
+            </if>
+            <if test="null != syncRecordPosition and '' != syncRecordPosition">
+                #{syncRecordPosition},
+            </if>
+            <if test="null != latestSyncTime and '' != latestSyncTime">
+                #{latestSyncTime},
+            </if>
+            <if test="null != currentSyncNum and '' != currentSyncNum">
+                #{currentSyncNum},
+            </if>
+            <if test="null != syncTotal and '' != syncTotal">
+                #{syncTotal}
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="delete">
+        DELETE
+        FROM data_docking_record
+        WHERE id = #{id}
+    </delete>
+
+    <update id="update" parameterType="www.bejson.com.entity.DataDockingRecordEntity">
+        UPDATE data_docking_record
+        <set>
+            <if test="null != type and '' != type">type = #{type},</if>
+            <if test="null != syncRecordPosition and '' != syncRecordPosition">sync_record_position =
+                #{syncRecordPosition},
+            </if>
+            <if test="null != latestSyncTime and '' != latestSyncTime">latest_sync_time = #{latestSyncTime},</if>
+            <if test="null != currentSyncNum and '' != currentSyncNum">current_sync_num = #{currentSyncNum},</if>
+            <if test="null != syncTotal and '' != syncTotal">sync_total = #{syncTotal}</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+
+    <select id="load" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM data_docking_record
+        WHERE id = #{id}
+    </select>
+
+    <select id="pageList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM data_docking_record
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <select id="pageListCount" resultType="java.lang.Integer">
+        SELECT count(1)
+        FROM data_docking_record
+    </select>
+
+    <select id="queryByType" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from data_docking_record
+        where type = #{type}
+    </select>
+
+</mapper>

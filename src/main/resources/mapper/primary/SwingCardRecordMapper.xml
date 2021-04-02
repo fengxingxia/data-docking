@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.data.docking.mapper.SwingCardRecordMapper">
+
+    <resultMap id="BaseResultMap" type="com.data.docking.domain.SwingCardRecord">
+        <result column="id" property="id"/>
+        <result column="record_no" property="recordNo"/>
+        <result column="device_code" property="deviceCode"/>
+        <result column="device_name" property="deviceName"/>
+        <result column="channel_code" property="channelCode"/>
+        <result column="channel_name" property="channelName"/>
+        <result column="reader_code" property="readerCode"/>
+        <result column="reader_name" property="readerName"/>
+        <result column="open_type" property="openType"/>
+        <result column="business_type" property="businessType"/>
+        <result column="org_code" property="orgCode"/>
+        <result column="org_name" property="orgName"/>
+        <result column="card_number" property="cardNumber"/>
+        <result column="card_type" property="cardType"/>
+        <result column="person_code" property="personCode"/>
+        <result column="person_name" property="personName"/>
+        <result column="swing_time" property="swingTime"/>
+        <result column="open_result" property="openResult"/>
+        <result column="picutre1" property="picutre1"/>
+        <result column="picutre2" property="picutre2"/>
+        <result column="picutre3" property="picutre3"/>
+        <result column="picutre4" property="picutre4"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="card_status" property="cardStatus"/>
+        <result column="unit_seq" property="unitSeq"/>
+        <result column="enter_or_exit" property="enterOrExit"/>
+        <result column="prev" property="prev"/>
+        <result column="next" property="next"/>
+        <result column="operator" property="operator"/>
+        <result column="route_result" property="routeResult"/>
+        <result column="remark" property="remark"/>
+        <result column="paper_type" property="paperType"/>
+        <result column="paper_number" property="paperNumber"/>
+        <result column="device_model" property="deviceModel"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id
+        ,
+                record_no,
+                device_code,
+                device_name,
+                channel_code,
+                channel_name,
+                reader_code,
+                reader_name,
+                open_type,
+                business_type,
+                org_code,
+                org_name,
+                card_number,
+                card_type,
+                person_code,
+                person_name,
+                swing_time,
+                open_result,
+                picutre1,
+                picutre2,
+                picutre3,
+                picutre4,
+                create_time,
+                update_time,
+                card_status,
+                unit_seq,
+                enter_or_exit,
+                prev,
+                next,
+                operator,
+                route_result,
+                remark,
+                paper_type,
+                paper_number,
+                device_model
+    </sql>
+    <insert id="insert" useGeneratedKeys="true" keyColumn="id" keyProperty="id"
+            parameterType="www.bejson.com.entity.AcsSwingCardRecordEntity">
+        INSERT INTO acs_swing_card_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="null != recordNo and '' != recordNo">
+                record_no,
+            </if>
+            <if test="null != deviceCode and '' != deviceCode">
+                device_code,
+            </if>
+            <if test="null != deviceName and '' != deviceName">
+                device_name,
+            </if>
+            <if test="null != channelCode and '' != channelCode">
+                channel_code,
+            </if>
+            <if test="null != channelName and '' != channelName">
+                channel_name,
+            </if>
+            <if test="null != readerCode and '' != readerCode">
+                reader_code,
+            </if>
+            <if test="null != readerName and '' != readerName">
+                reader_name,
+            </if>
+            <if test="null != openType and '' != openType">
+                open_type,
+            </if>
+            <if test="null != businessType and '' != businessType">
+                business_type,
+            </if>
+            <if test="null != orgCode and '' != orgCode">
+                org_code,
+            </if>
+            <if test="null != orgName and '' != orgName">
+                org_name,
+            </if>
+            <if test="null != cardNumber and '' != cardNumber">
+                card_number,
+            </if>
+            <if test="null != cardType and '' != cardType">
+                card_type,
+            </if>
+            <if test="null != personCode and '' != personCode">
+                person_code,
+            </if>
+            <if test="null != personName and '' != personName">
+                person_name,
+            </if>
+            <if test="null != swingTime and '' != swingTime">
+                swing_time,
+            </if>
+            <if test="null != openResult and '' != openResult">
+                open_result,
+            </if>
+            <if test="null != picutre1 and '' != picutre1">
+                picutre1,
+            </if>
+            <if test="null != picutre2 and '' != picutre2">
+                picutre2,
+            </if>
+            <if test="null != picutre3 and '' != picutre3">
+                picutre3,
+            </if>
+            <if test="null != picutre4 and '' != picutre4">
+                picutre4,
+            </if>
+            <if test="null != createTime and '' != createTime">
+                create_time,
+            </if>
+            <if test="null != updateTime and '' != updateTime">
+                update_time,
+            </if>
+            <if test="null != cardStatus and '' != cardStatus">
+                card_status,
+            </if>
+            <if test="null != unitSeq and '' != unitSeq">
+                unit_seq,
+            </if>
+            <if test="null != enterOrExit and '' != enterOrExit">
+                enter_or_exit,
+            </if>
+            <if test="null != prev and '' != prev">
+                prev,
+            </if>
+            <if test="null != next and '' != next">
+                next,
+            </if>
+            <if test="null != operator and '' != operator">
+                operator,
+            </if>
+            <if test="null != routeResult and '' != routeResult">
+                route_result,
+            </if>
+            <if test="null != remark and '' != remark">
+                remark,
+            </if>
+            <if test="null != paperType and '' != paperType">
+                paper_type,
+            </if>
+            <if test="null != paperNumber and '' != paperNumber">
+                paper_number,
+            </if>
+            <if test="null != deviceModel and '' != deviceModel">
+                device_model
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="null != recordNo and '' != recordNo">
+                #{recordNo},
+            </if>
+            <if test="null != deviceCode and '' != deviceCode">
+                #{deviceCode},
+            </if>
+            <if test="null != deviceName and '' != deviceName">
+                #{deviceName},
+            </if>
+            <if test="null != channelCode and '' != channelCode">
+                #{channelCode},
+            </if>
+            <if test="null != channelName and '' != channelName">
+                #{channelName},
+            </if>
+            <if test="null != readerCode and '' != readerCode">
+                #{readerCode},
+            </if>
+            <if test="null != readerName and '' != readerName">
+                #{readerName},
+            </if>
+            <if test="null != openType and '' != openType">
+                #{openType},
+            </if>
+            <if test="null != businessType and '' != businessType">
+                #{businessType},
+            </if>
+            <if test="null != orgCode and '' != orgCode">
+                #{orgCode},
+            </if>
+            <if test="null != orgName and '' != orgName">
+                #{orgName},
+            </if>
+            <if test="null != cardNumber and '' != cardNumber">
+                #{cardNumber},
+            </if>
+            <if test="null != cardType and '' != cardType">
+                #{cardType},
+            </if>
+            <if test="null != personCode and '' != personCode">
+                #{personCode},
+            </if>
+            <if test="null != personName and '' != personName">
+                #{personName},
+            </if>
+            <if test="null != swingTime and '' != swingTime">
+                #{swingTime},
+            </if>
+            <if test="null != openResult and '' != openResult">
+                #{openResult},
+            </if>
+            <if test="null != picutre1 and '' != picutre1">
+                #{picutre1},
+            </if>
+            <if test="null != picutre2 and '' != picutre2">
+                #{picutre2},
+            </if>
+            <if test="null != picutre3 and '' != picutre3">
+                #{picutre3},
+            </if>
+            <if test="null != picutre4 and '' != picutre4">
+                #{picutre4},
+            </if>
+            <if test="null != createTime and '' != createTime">
+                #{createTime},
+            </if>
+            <if test="null != updateTime and '' != updateTime">
+                #{updateTime},
+            </if>
+            <if test="null != cardStatus and '' != cardStatus">
+                #{cardStatus},
+            </if>
+            <if test="null != unitSeq and '' != unitSeq">
+                #{unitSeq},
+            </if>
+            <if test="null != enterOrExit and '' != enterOrExit">
+                #{enterOrExit},
+            </if>
+            <if test="null != prev and '' != prev">
+                #{prev},
+            </if>
+            <if test="null != next and '' != next">
+                #{next},
+            </if>
+            <if test="null != operator and '' != operator">
+                #{operator},
+            </if>
+            <if test="null != routeResult and '' != routeResult">
+                #{routeResult},
+            </if>
+            <if test="null != remark and '' != remark">
+                #{remark},
+            </if>
+            <if test="null != paperType and '' != paperType">
+                #{paperType},
+            </if>
+            <if test="null != paperNumber and '' != paperNumber">
+                #{paperNumber},
+            </if>
+            <if test="null != deviceModel and '' != deviceModel">
+                #{deviceModel}
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="delete">
+        DELETE
+        FROM acs_swing_card_record
+        WHERE id = #{id}
+    </delete>
+
+    <update id="update" parameterType="www.bejson.com.entity.AcsSwingCardRecordEntity">
+        UPDATE acs_swing_card_record
+        <set>
+            <if test="null != recordNo and '' != recordNo">record_no = #{recordNo},</if>
+            <if test="null != deviceCode and '' != deviceCode">device_code = #{deviceCode},</if>
+            <if test="null != deviceName and '' != deviceName">device_name = #{deviceName},</if>
+            <if test="null != channelCode and '' != channelCode">channel_code = #{channelCode},</if>
+            <if test="null != channelName and '' != channelName">channel_name = #{channelName},</if>
+            <if test="null != readerCode and '' != readerCode">reader_code = #{readerCode},</if>
+            <if test="null != readerName and '' != readerName">reader_name = #{readerName},</if>
+            <if test="null != openType and '' != openType">open_type = #{openType},</if>
+            <if test="null != businessType and '' != businessType">business_type = #{businessType},</if>
+            <if test="null != orgCode and '' != orgCode">org_code = #{orgCode},</if>
+            <if test="null != orgName and '' != orgName">org_name = #{orgName},</if>
+            <if test="null != cardNumber and '' != cardNumber">card_number = #{cardNumber},</if>
+            <if test="null != cardType and '' != cardType">card_type = #{cardType},</if>
+            <if test="null != personCode and '' != personCode">person_code = #{personCode},</if>
+            <if test="null != personName and '' != personName">person_name = #{personName},</if>
+            <if test="null != swingTime and '' != swingTime">swing_time = #{swingTime},</if>
+            <if test="null != openResult and '' != openResult">open_result = #{openResult},</if>
+            <if test="null != picutre1 and '' != picutre1">picutre1 = #{picutre1},</if>
+            <if test="null != picutre2 and '' != picutre2">picutre2 = #{picutre2},</if>
+            <if test="null != picutre3 and '' != picutre3">picutre3 = #{picutre3},</if>
+            <if test="null != picutre4 and '' != picutre4">picutre4 = #{picutre4},</if>
+            <if test="null != createTime and '' != createTime">create_time = #{createTime},</if>
+            <if test="null != updateTime and '' != updateTime">update_time = #{updateTime},</if>
+            <if test="null != cardStatus and '' != cardStatus">card_status = #{cardStatus},</if>
+            <if test="null != unitSeq and '' != unitSeq">unit_seq = #{unitSeq},</if>
+            <if test="null != enterOrExit and '' != enterOrExit">enter_or_exit = #{enterOrExit},</if>
+            <if test="null != prev and '' != prev">prev = #{prev},</if>
+            <if test="null != next and '' != next">next = #{next},</if>
+            <if test="null != operator and '' != operator">operator = #{operator},</if>
+            <if test="null != routeResult and '' != routeResult">route_result = #{routeResult},</if>
+            <if test="null != remark and '' != remark">remark = #{remark},</if>
+            <if test="null != paperType and '' != paperType">paper_type = #{paperType},</if>
+            <if test="null != paperNumber and '' != paperNumber">paper_number = #{paperNumber},</if>
+            <if test="null != deviceModel and '' != deviceModel">device_model = #{deviceModel}</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+
+    <select id="load" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM acs_swing_card_record
+        WHERE id = #{id}
+    </select>
+
+    <select id="pageList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM acs_swing_card_record
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <select id="pageListCount" resultType="java.lang.Integer">
+        SELECT count(1)
+        FROM acs_swing_card_record
+    </select>
+</mapper>
