@@ -64,6 +64,7 @@ public class HttpClientPoolUtil {
     }
 
     public static ConnectionKeepAliveStrategy defaultStrategy = new ConnectionKeepAliveStrategy() {
+        @Override
         public long getKeepAliveDuration(HttpResponse response, HttpContext context) {
             HeaderElementIterator it = new BasicHeaderElementIterator(response.headerIterator("Keep-Alive"));
             int keepTime = config.getHttpDefaultKeepTime();
@@ -87,12 +88,15 @@ public class HttpClientPoolUtil {
         SSLContext sc = SSLContext.getInstance("SSLv3");
 
         X509TrustManager trustManager = new X509TrustManager() {
+            @Override
             public void checkClientTrusted(X509Certificate[] paramArrayOfX509Certificate, String paramString) {
             }
 
+            @Override
             public void checkServerTrusted(X509Certificate[] paramArrayOfX509Certificate, String paramString) {
             }
 
+            @Override
             public X509Certificate[] getAcceptedIssuers() {
                 return null;
             }
