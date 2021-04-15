@@ -81,7 +81,6 @@ public class DataDockingService {
             picture1 = OssUtil.getImgUrl(Base64.encodeBase64String(imageBytes));
         }
         swingCardRecord.setPicutre1(picture1);
-        // TODO 开门结果待确认
         swingCardRecord.setOpenResult(1);
         swingCardRecord.setCreateTime(sdf.parse(sdf.format(new Date())));
         swingCardRecord.setUpdateTime(sdf.parse(sdf.format(new Date())));
@@ -137,11 +136,7 @@ public class DataDockingService {
      * @return
      */
     private Integer parseOpenType(Integer thirdOpenType) {
-        if (thirdOpenType == null) {
-            return 1;
-        }
-        // TODO 开门方式待完善
-        return thirdOpenType;
+        return 1;
     }
 
 }
