@@ -2,6 +2,8 @@ package com.data.docking.domain;
 
 import lombok.Data;
 
+import java.util.Date;
+
 /**
  * @author chenjianhui
  * @version V1.0
@@ -14,7 +16,7 @@ public class ThirdCarInRecord {
     /**
      * 序号
      */
-    private String ID;
+    private Long ID;
     /**
      * 停车标识码
      */
@@ -26,7 +28,7 @@ public class ThirdCarInRecord {
     /**
      * 凭证类别
      */
-    private String tokenType;
+    private Integer tokenType;
     /**
      * 所属车场
      */
@@ -82,7 +84,7 @@ public class ThirdCarInRecord {
     /**
      * 入场时间
      */
-    private String InTime;
+    private Date InTime;
     /**
      * 入场图片
      */
@@ -106,11 +108,11 @@ public class ThirdCarInRecord {
     /**
      * 入场类型
      */
-    private String InType;
+    private Integer InType;
     /**
      * 数据标识
      */
-    private String InFlag;
+    private Integer InFlag;
     /**
      * 车位满位说明
      */
@@ -118,11 +120,11 @@ public class ThirdCarInRecord {
     /**
      * 场内车状态
      */
-    private String State;
+    private Integer State;
     /**
      * 是否开通无感支付（0未开通，1开通）
      */
-    private String PayMark;
+    private Integer PayMark;
     /**
      * 最后收费时间
      */
@@ -130,7 +132,7 @@ public class ThirdCarInRecord {
     /**
      * 集团车状态
      */
-    private String GroupLotState;
+    private Integer GroupLotState;
     /**
      * 预约单号
      */
