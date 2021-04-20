@@ -40,4 +40,9 @@ public class DataDockingRecord implements Serializable {
     */
     private Long syncTotal;
 
+    /**
+     * 当前查询到哪个页面
+     */
+    private Integer currentPage;
+
 }

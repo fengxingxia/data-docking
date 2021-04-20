@@ -8,8 +8,10 @@ package com.data.docking.constant;
  */
 public class BusinessTypeConstant {
 
-    public static final Integer CAR_CAPTURE = 1;
+    public static final Integer CAR_CAPTURE_IN = 1;
 
-    public static final Integer SWING_CARD_RECORD = 2;
+    public static final Integer CAR_CAPTURE_OUT = 2;
+
+    public static final Integer SWING_CARD_RECORD = 3;
 
 }

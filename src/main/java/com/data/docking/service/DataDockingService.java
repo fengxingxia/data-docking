@@ -2,10 +2,7 @@ package com.data.docking.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.data.docking.constant.BusinessTypeConstant;
-import com.data.docking.domain.DataDockingRecord;
-import com.data.docking.domain.Response;
-import com.data.docking.domain.SwingCardRecord;
-import com.data.docking.domain.ThirdPartOpenDoorRecord;
+import com.data.docking.domain.*;
 import com.data.docking.mapper.CarCaptureMapper;
 import com.data.docking.mapper.DataDockingRecordMapper;
 import com.data.docking.mapper.SwingCardRecordMapper;
@@ -13,14 +10,15 @@ import com.data.docking.util.HttpClientPoolUtil;
 import com.data.docking.util.OssUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * @author chenjianhui
@@ -41,7 +39,14 @@ public class DataDockingService {
     @Autowired
     private SwingCardRecordMapper swingCardRecordMapper;
 
+    @Value("${car.inout.host.port}")
+    private String thirdHost;
+
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+    private static final String IN_CAR_URL = "/InVehicle/GetByCustom";
+
+    private static final String OUT_CAR_URL = "/OutVehicle/GetByFunc";
 
     /**
      * 对接第三方开门记录
@@ -113,21 +118,128 @@ public class DataDockingService {
     }
 
     /**
-     * 同步过车记录
+     * 同步车辆进场记录
      */
-    public void syncCarCapture() {
-        DataDockingRecord dataDockingRecord = queryDataDocking(BusinessTypeConstant.CAR_CAPTURE);
+    public void syncCarCapture() throws Exception {
+        DataDockingRecord dataDockingRecord = queryDataDocking(BusinessTypeConstant.CAR_CAPTURE_IN);
         String syncPosition = Objects.isNull(dataDockingRecord) ? "0" : dataDockingRecord.getSyncRecordPosition();
         Integer currentSynNum = 0;
-        // 查询第三方数据库
-
+        // 调用第三方接口
+        String url = thirdHost + IN_CAR_URL;
+        ThirdCarRecordParams params = buildParams(dataDockingRecord);
+        String result = HttpClientPoolUtil.post(url, JSONObject.toJSONString(params), new HashMap<>());
+        if (StringUtils.isNotBlank(result)) {
+            ResponseResult responseResult = JSONObject.parseObject(result, ResponseResult.class);
+            if (Objects.nonNull(responseResult.getState()) && responseResult.getState().getIsSucess()) {
+                // 解析入场记录
+                List<ThirdCarInRecord> records = responseResult.getRecords();
+                saveCarInCapture(records);
+                ThirdCarInRecord lastRecord = records.get(records.size() - 1);
+                if (Objects.nonNull(lastRecord.getID())) {
+                    syncPosition = String.valueOf(lastRecord.getID());
+                }
+            }
+        }
         // 更新同步记录
         if (Objects.isNull(dataDockingRecord)) {
-            dataDockingRecordMapper.insert(createDataDocking(0L, currentSynNum, BusinessTypeConstant.CAR_CAPTURE, syncPosition));
+            dataDockingRecordMapper.insert(createDataDocking(0L, currentSynNum, BusinessTypeConstant.CAR_CAPTURE_IN, syncPosition));
         } else {
             dataDockingRecordMapper.update(createDataDocking(dataDockingRecord.getId(), currentSynNum,
-                    BusinessTypeConstant.CAR_CAPTURE, syncPosition));
+                    BusinessTypeConstant.CAR_CAPTURE_IN, syncPosition));
         }
+    }
+
+    /**
+     * 构建车辆进场记录
+     *
+     * @param records
+     * @return
+     */
+    public void saveCarInCapture(List<ThirdCarInRecord> records) {
+        if (CollectionUtils.isEmpty(records)) {
+            return;
+        }
+        records.forEach(record -> {
+            CarCapture carCapture = new CarCapture();
+            carCapture.setDevId(record.getTerminalId());
+            carCapture.setDevChnid(record.getInLaneId());
+            carCapture.setDevChnnum(0);
+            carCapture.setDevChnname(record.getTerminalName());
+            carCapture.setCarNum(record.getRegPlate());
+            // TODO 车牌类型
+            carCapture.setCarNumtype(null);
+            // TODO 车牌颜色
+//            carCapture.setCarNumcolor(record.getPlateColor());
+            carCapture.setCarDirect("1");
+            carCapture.setCarWayCode(record.getInLaneId());
+            carCapture.setCapTime(record.getInTime());
+            try {
+                carCapture.setCarImgUrl(OssUtil.uploadAndGetImgUrl(record.getInPicture()));
+            } catch (Exception e) {
+                log.error("上传车辆抓拍图片到oss异常", e);
+            }
+            carCapture.setParkingLotCode(record.getParkingId());
+            carCapture.setVehicleHeadDirection(0);
+            carCapture.setParkingCarColor(record.getVehicleColor());
+            carCaptureMapper.insert(carCapture);
+        });
+
+    }
+
+    /**
+     * 构建车辆出场记录
+     *
+     * @param records
+     * @return
+     */
+    public List<CarCapture> buildCarOutCapture(List<ThirdCarOutRecord> records) {
+        List<CarCapture> carCaptures = new ArrayList<>();
+        if (CollectionUtils.isEmpty(records)) {
+            return carCaptures;
+        }
+        records.forEach(record -> {
+            CarCapture carCapture = new CarCapture();
+            carCapture.setDevId(record.getTerminalId());
+            carCapture.setDevChnid(record.getInLaneId());
+            carCapture.setDevChnnum(0);
+            carCapture.setDevChnname(record.getTerminalName());
+            carCapture.setCarNum(record.getRegPlate());
+            // TODO 车牌类型
+            carCapture.setCarNumtype(null);
+            // TODO 车牌颜色
+//            carCapture.setCarNumcolor(record.getPlateColor());
+            carCapture.setCarDirect("1");
+            carCapture.setCarWayCode(record.getInLaneId());
+            carCapture.setCapTime(record.getInTime());
+            try {
+                carCapture.setCarImgUrl(OssUtil.uploadAndGetImgUrl(record.getInPicture()));
+            } catch (Exception e) {
+                log.error("上传车辆抓拍图片到oss异常", e);
+            }
+            carCapture.setParkingLotCode(record.getParkingId());
+            carCapture.setVehicleHeadDirection(0);
+            carCapture.setParkingCarColor(record.getVehicleColor());
+
+        });
+        return carCaptures;
+
+    }
+
+    /**
+     * 构建查询参数
+     *
+     * @param dataDockingRecord
+     * @return
+     */
+    private ThirdCarRecordParams buildParams(DataDockingRecord dataDockingRecord) {
+        ThirdCarRecordParams params = new ThirdCarRecordParams();
+        params.setPageSize(100);
+        params.setCurrentPage(1);
+        params.setOrderBy("id");
+        if (Objects.nonNull(dataDockingRecord)) {
+            params.setWhere("id > " + dataDockingRecord.getSyncRecordPosition());
+        }
+        return params;
     }
 
     /**

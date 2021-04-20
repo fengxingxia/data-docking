@@ -1,6 +1,7 @@
 package com.data.docking.util;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.springframework.util.Base64Utils;
@@ -16,6 +17,21 @@ public class OssUtil {
     private static final String BOUNDARYPREFIX = "--";
 
     private static String ossIp = "";
+
+    /**
+     * 上传图片并获取oss图片地址
+     *
+     * @param url
+     * @return
+     * @throws Exception
+     */
+    public static String uploadAndGetImgUrl(String url) throws Exception {
+        byte[] imageBytes = HttpClientPoolUtil.getResponseBytes(url, null);
+        if (imageBytes.length > 0) {
+            return getImgUrl(Base64.encodeBase64String(imageBytes));
+        }
+        return "";
+    }
 
     public static String getImgUrl(String imgBase64) {
         long start = System.currentTimeMillis();

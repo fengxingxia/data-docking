@@ -1,6 +1,10 @@
 package com.data.docking.domain;
 
 import lombok.Data;
+import org.apache.commons.lang.StringUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @ClassName ThirdCarRecordParams
@@ -15,11 +19,11 @@ public class ThirdCarRecordParams {
     /**
      * 分页条数
      */
-    private String PageSize;
+    private Integer PageSize;
     /**
      * 当前页数
      */
-    private String CurrentPage;
+    private Integer CurrentPage;
     /**
      * 排序
      */
@@ -39,6 +43,28 @@ public class ThirdCarRecordParams {
     /**
      * 总条数
      */
-    private String TotalCount;
+    private Integer TotalCount;
+
+    public Map<String, String> buildMap() {
+        Map<String, String> params = new HashMap<>();
+        params.put("PageSize", String.valueOf(this.getPageSize()));
+        params.put("CurrentPage", String.valueOf(this.getCurrentPage()));
+        if (StringUtils.isNotBlank(this.getOrderBy())) {
+            params.put("OrderBy", this.getOrderBy());
+        }
+        if (StringUtils.isNotBlank(this.getOrderType())) {
+            params.put("OrderType", this.getOrderType());
+        }
+        if (StringUtils.isNotBlank(this.getWhere())) {
+            params.put("where", this.getWhere());
+        }
+        if (StringUtils.isNotBlank(this.getOrderBy())) {
+            params.put("Append", this.getAppend());
+        }
+        if (this.getTotalCount() != null) {
+            params.put("TotalCount", String.valueOf(this.getTotalCount()));
+        }
+        return params;
+    }
 
 }
