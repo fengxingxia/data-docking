@@ -12,12 +12,12 @@ import java.util.List;
  * @Version 1.0
  */
 @Data
-public class ResponseResult {
+public class ResponseResult<T> {
 
     private ThirdCarRecordParams PageAttri;
 
     private ResponseState State;
 
-    private List<ThirdCarInRecord> Records;
+    private List<T> Records;
 
 }

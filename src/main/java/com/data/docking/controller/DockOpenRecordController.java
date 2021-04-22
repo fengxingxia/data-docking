@@ -21,7 +21,7 @@ import java.io.BufferedReader;
  * @Version 1.0
  */
 @RestController
-@RequestMapping("/opendoor")
+@RequestMapping("/")
 @Slf4j
 public class DockOpenRecordController {
 
@@ -35,7 +35,7 @@ public class DockOpenRecordController {
      * @return
      */
     @ResponseBody
-    @PostMapping("/record")
+    @PostMapping("/opendoor/record")
     public String roomList(HttpServletRequest request ) {
         try {
             BufferedReader reader = request.getReader();
@@ -44,9 +44,7 @@ public class DockOpenRecordController {
             while ((line = reader.readLine()) != null) {
                 sb.append(line);
             }
-            if (log.isDebugEnabled()) {
-                log.debug("接收到的第三方开门记录为: {}", sb.toString());
-            }
+            log.info("接收到的第三方开门记录为: {}", sb.toString());
             dockingService.dockingOpenDoorRecord(sb.toString());
             return JSONObject.toJSONString(Response.buildSuccess());
         } catch (Exception e) {

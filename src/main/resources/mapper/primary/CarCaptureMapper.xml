@@ -90,7 +90,7 @@
 
     <insert id="insert" useGeneratedKeys="true" keyColumn="id" keyProperty="id"
             parameterType="www.bejson.com.entity.PCarCaptureEntity">
-        INSERT INTO p_car_capture
+        INSERT INTO ipms.p_car_capture
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="null != devId and '' != devId">
                 dev_id,
@@ -327,12 +327,12 @@
 
     <delete id="delete">
         DELETE
-        FROM p_car_capture
+        FROM ipms.p_car_capture
         WHERE id = #{id}
     </delete>
 
     <update id="update" parameterType="www.bejson.com.entity.PCarCaptureEntity">
-        UPDATE p_car_capture
+        UPDATE ipms.p_car_capture
         <set>
             <if test="null != devId and '' != devId">dev_id = #{devId},</if>
             <if test="null != devChnid and '' != devChnid">dev_chnid = #{devChnid},</if>
@@ -387,20 +387,20 @@
     <select id="load" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
-        FROM p_car_capture
+        FROM ipms.p_car_capture
         WHERE id = #{id}
     </select>
 
     <select id="pageList" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
-        FROM p_car_capture
+        FROM ipms.p_car_capture
         LIMIT #{offset}, #{pageSize}
     </select>
 
     <select id="pageListCount" resultType="java.lang.Integer">
         SELECT count(1)
-        FROM p_car_capture
+        FROM ipms.p_car_capture
     </select>
 
 </mapper>

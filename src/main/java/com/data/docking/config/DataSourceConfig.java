@@ -22,34 +22,33 @@ import javax.sql.DataSource;
  * @since 2021/3/23
  */
 @Configuration
-@MapperScan(basePackages = "com.**.mapper.second", sqlSessionTemplateRef = "secondSqlSessionTemplate")
-public class SecondDataSourceConfig {
+@MapperScan(basePackages = "com.**.mapper", sqlSessionTemplateRef = "sqlSessionTemplate")
+public class DataSourceConfig {
 
     /**
-     * dahua数据源
-     *
+     * 第三方数据源
      * @return
      */
-    @Bean(name = "secondDataSource")
-    @ConfigurationProperties(prefix = "spring.datasource.second")
+    @Bean(name = "dataSource")
+    @ConfigurationProperties(prefix = "spring.datasource")
     public DataSource odcDataSource() {
         return DruidDataSourceBuilder.create().build();
     }
 
     /**
-     * dahua数据源SQL session factory
+     * 第三方数据源sql session factory
      *
      * @param dataSource
      * @return
      * @throws Exception
      */
-    @Bean(name = "secondSqlSessionFactory")
-    public SqlSessionFactory odcSqlSessionFactory(@Qualifier("secondDataSource") DataSource dataSource)
+    @Bean(name = "sqlSessionFactory")
+    public SqlSessionFactory primarySqlSessionFactory(@Qualifier("dataSource") DataSource dataSource)
             throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
         bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(
-                "classpath*:/mapper/second/*.xml"));
+                "classpath*:/mapper/*.xml"));
         SqlSessionFactory sessionFactory = bean.getObject();
         if (sessionFactory != null) {
             sessionFactory.getConfiguration().setMapUnderscoreToCamelCase(true);
@@ -58,23 +57,24 @@ public class SecondDataSourceConfig {
     }
 
     /**
-     * dahua数据与事务管理器
+     * 第三方数据源事务管理器
      *
      * @param dataSource
      * @return
      */
-    @Bean(name = "secondTransactionManager")
-    public PlatformTransactionManager odcTransactionManager(@Qualifier("secondDataSource") DataSource dataSource) {
+    @Bean(name = "transactionManager")
+    public PlatformTransactionManager odcTransactionManager(@Qualifier("dataSource") DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 
     /**
-     * dahua数据源 sql template
+     * 第三方数据源SQL template
+     *
      * @param sqlSessionFactory
      * @return
      */
-    @Bean(name = "secondSqlSessionTemplate")
-    public SqlSessionTemplate visualSqlSessionTemplate(@Qualifier("secondSqlSessionFactory") SqlSessionFactory sqlSessionFactory) {
+    @Bean(name = "sqlSessionTemplate")
+    public SqlSessionTemplate visualSqlSessionTemplate(@Qualifier("sqlSessionFactory") SqlSessionFactory sqlSessionFactory) {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 

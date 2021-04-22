@@ -120,7 +120,7 @@ public class DataDockingService {
     /**
      * 同步车辆进场记录
      */
-    public void syncCarCapture() throws Exception {
+    public void syncCarInCapture() throws Exception {
         DataDockingRecord dataDockingRecord = queryDataDocking(BusinessTypeConstant.CAR_CAPTURE_IN);
         String syncPosition = Objects.isNull(dataDockingRecord) ? "0" : dataDockingRecord.getSyncRecordPosition();
         Integer currentSynNum = 0;
@@ -129,7 +129,7 @@ public class DataDockingService {
         ThirdCarRecordParams params = buildParams(dataDockingRecord);
         String result = HttpClientPoolUtil.post(url, JSONObject.toJSONString(params), new HashMap<>());
         if (StringUtils.isNotBlank(result)) {
-            ResponseResult responseResult = JSONObject.parseObject(result, ResponseResult.class);
+            ResponseResult<ThirdCarInRecord> responseResult = JSONObject.parseObject(result, ResponseResult.class);
             if (Objects.nonNull(responseResult.getState()) && responseResult.getState().getIsSucess()) {
                 // 解析入场记录
                 List<ThirdCarInRecord> records = responseResult.getRecords();
@@ -143,6 +143,38 @@ public class DataDockingService {
         // 更新同步记录
         if (Objects.isNull(dataDockingRecord)) {
             dataDockingRecordMapper.insert(createDataDocking(0L, currentSynNum, BusinessTypeConstant.CAR_CAPTURE_IN, syncPosition));
+        } else {
+            dataDockingRecordMapper.update(createDataDocking(dataDockingRecord.getId(), currentSynNum,
+                    BusinessTypeConstant.CAR_CAPTURE_IN, syncPosition));
+        }
+    }
+
+    /**
+     * 同步车辆进场记录
+     */
+    public void syncCarOutCapture() throws Exception {
+        DataDockingRecord dataDockingRecord = queryDataDocking(BusinessTypeConstant.CAR_CAPTURE_OUT);
+        String syncPosition = Objects.isNull(dataDockingRecord) ? "0" : dataDockingRecord.getSyncRecordPosition();
+        Integer currentSynNum = 0;
+        // 调用第三方接口
+        String url = thirdHost + OUT_CAR_URL;
+        ThirdCarRecordParams params = buildParams(dataDockingRecord);
+        String result = HttpClientPoolUtil.post(url, JSONObject.toJSONString(params), new HashMap<>());
+        if (StringUtils.isNotBlank(result)) {
+            ResponseResult<ThirdCarOutRecord> responseResult = JSONObject.parseObject(result, ResponseResult.class);
+            if (Objects.nonNull(responseResult.getState()) && responseResult.getState().getIsSucess()) {
+                // 保存入场记录
+                List<ThirdCarOutRecord> records = responseResult.getRecords();
+                saveCarOutCapture(records);
+                ThirdCarOutRecord lastRecord = records.get(records.size() - 1);
+                if (Objects.nonNull(lastRecord.getID())) {
+                    syncPosition = String.valueOf(lastRecord.getID());
+                }
+            }
+        }
+        // 更新同步记录
+        if (Objects.isNull(dataDockingRecord)) {
+            dataDockingRecordMapper.insert(createDataDocking(0L, currentSynNum, BusinessTypeConstant.CAR_CAPTURE_OUT, syncPosition));
         } else {
             dataDockingRecordMapper.update(createDataDocking(dataDockingRecord.getId(), currentSynNum,
                     BusinessTypeConstant.CAR_CAPTURE_IN, syncPosition));
@@ -192,10 +224,9 @@ public class DataDockingService {
      * @param records
      * @return
      */
-    public List<CarCapture> buildCarOutCapture(List<ThirdCarOutRecord> records) {
-        List<CarCapture> carCaptures = new ArrayList<>();
+    public void saveCarOutCapture(List<ThirdCarOutRecord> records) {
         if (CollectionUtils.isEmpty(records)) {
-            return carCaptures;
+            return;
         }
         records.forEach(record -> {
             CarCapture carCapture = new CarCapture();
@@ -219,9 +250,8 @@ public class DataDockingService {
             carCapture.setParkingLotCode(record.getParkingId());
             carCapture.setVehicleHeadDirection(0);
             carCapture.setParkingCarColor(record.getVehicleColor());
-
+            carCaptureMapper.insert(carCapture);
         });
-        return carCaptures;
 
     }
 

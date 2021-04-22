@@ -40,7 +40,6 @@ import java.security.cert.X509Certificate;
 import java.util.List;
 import java.util.Map;
 
-@Component
 public class HttpClientPoolUtil {
 
     private static Logger logger = LoggerFactory.getLogger(HttpClientPoolUtil.class);
