@@ -22,7 +22,7 @@
     </sql>
 
     <insert id="insert" useGeneratedKeys="true" keyColumn="id" keyProperty="id"
-            parameterType="www.bejson.com.entity.DataDockingRecordEntity">
+            parameterType="com.data.docking.domain.DataDockingRecord">
         INSERT INTO data_docking_record
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="null != type and '' != type">
@@ -31,7 +31,7 @@
             <if test="null != syncRecordPosition and '' != syncRecordPosition">
                 sync_record_position,
             </if>
-            <if test="null != latestSyncTime and '' != latestSyncTime">
+            <if test="null != latestSyncTime">
                 latest_sync_time,
             </if>
             <if test="null != currentSyncNum and '' != currentSyncNum">
@@ -48,7 +48,7 @@
             <if test="null != syncRecordPosition and '' != syncRecordPosition">
                 #{syncRecordPosition},
             </if>
-            <if test="null != latestSyncTime and '' != latestSyncTime">
+            <if test="null != latestSyncTime">
                 #{latestSyncTime},
             </if>
             <if test="null != currentSyncNum and '' != currentSyncNum">
@@ -66,14 +66,14 @@
         WHERE id = #{id}
     </delete>
 
-    <update id="update" parameterType="www.bejson.com.entity.DataDockingRecordEntity">
+    <update id="update" parameterType="com.data.docking.domain.DataDockingRecord">
         UPDATE data_docking_record
         <set>
             <if test="null != type and '' != type">type = #{type},</if>
             <if test="null != syncRecordPosition and '' != syncRecordPosition">sync_record_position =
                 #{syncRecordPosition},
             </if>
-            <if test="null != latestSyncTime and '' != latestSyncTime">latest_sync_time = #{latestSyncTime},</if>
+            <if test="null != latestSyncTime">latest_sync_time = #{latestSyncTime},</if>
             <if test="null != currentSyncNum and '' != currentSyncNum">current_sync_num = #{currentSyncNum},</if>
             <if test="null != syncTotal and '' != syncTotal">sync_total = #{syncTotal}</if>
         </set>

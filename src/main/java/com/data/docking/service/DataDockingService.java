@@ -93,6 +93,9 @@ public class DataDockingService {
         swingCardRecord.setOpenResult(1);
         swingCardRecord.setCreateTime(sdf.parse(sdf.format(new Date())));
         swingCardRecord.setUpdateTime(sdf.parse(sdf.format(new Date())));
+        swingCardRecord.setUnitSeq(1L);
+        swingCardRecord.setEnterOrExit(1);
+
         return swingCardRecord;
     }
 

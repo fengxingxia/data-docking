@@ -79,7 +79,7 @@
                 device_model
     </sql>
     <insert id="insert" useGeneratedKeys="true" keyColumn="id" keyProperty="id"
-            parameterType="www.bejson.com.entity.AcsSwingCardRecordEntity">
+            parameterType="com.data.docking.domain.SwingCardRecord">
         INSERT INTO acs_swing_card_record
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="null != recordNo and '' != recordNo">
@@ -127,7 +127,7 @@
             <if test="null != personName and '' != personName">
                 person_name,
             </if>
-            <if test="null != swingTime and '' != swingTime">
+            <if test="null != swingTime">
                 swing_time,
             </if>
             <if test="null != openResult and '' != openResult">
@@ -145,10 +145,10 @@
             <if test="null != picutre4 and '' != picutre4">
                 picutre4,
             </if>
-            <if test="null != createTime and '' != createTime">
+            <if test="null != createTime">
                 create_time,
             </if>
-            <if test="null != updateTime and '' != updateTime">
+            <if test="null != updateTime">
                 update_time,
             </if>
             <if test="null != cardStatus and '' != cardStatus">
@@ -231,7 +231,7 @@
             <if test="null != personName and '' != personName">
                 #{personName},
             </if>
-            <if test="null != swingTime and '' != swingTime">
+            <if test="null != swingTime">
                 #{swingTime},
             </if>
             <if test="null != openResult and '' != openResult">
@@ -249,10 +249,10 @@
             <if test="null != picutre4 and '' != picutre4">
                 #{picutre4},
             </if>
-            <if test="null != createTime and '' != createTime">
+            <if test="null != createTime">
                 #{createTime},
             </if>
-            <if test="null != updateTime and '' != updateTime">
+            <if test="null != updateTime">
                 #{updateTime},
             </if>
             <if test="null != cardStatus and '' != cardStatus">
@@ -297,7 +297,7 @@
         WHERE id = #{id}
     </delete>
 
-    <update id="update" parameterType="www.bejson.com.entity.AcsSwingCardRecordEntity">
+    <update id="update" parameterType="com.data.docking.domain.SwingCardRecord">
         UPDATE acs_swing_card_record
         <set>
             <if test="null != recordNo and '' != recordNo">record_no = #{recordNo},</if>
@@ -315,14 +315,14 @@
             <if test="null != cardType and '' != cardType">card_type = #{cardType},</if>
             <if test="null != personCode and '' != personCode">person_code = #{personCode},</if>
             <if test="null != personName and '' != personName">person_name = #{personName},</if>
-            <if test="null != swingTime and '' != swingTime">swing_time = #{swingTime},</if>
+            <if test="null != swingTime">swing_time = #{swingTime},</if>
             <if test="null != openResult and '' != openResult">open_result = #{openResult},</if>
             <if test="null != picutre1 and '' != picutre1">picutre1 = #{picutre1},</if>
             <if test="null != picutre2 and '' != picutre2">picutre2 = #{picutre2},</if>
             <if test="null != picutre3 and '' != picutre3">picutre3 = #{picutre3},</if>
             <if test="null != picutre4 and '' != picutre4">picutre4 = #{picutre4},</if>
-            <if test="null != createTime and '' != createTime">create_time = #{createTime},</if>
-            <if test="null != updateTime and '' != updateTime">update_time = #{updateTime},</if>
+            <if test="null != createTime">create_time = #{createTime},</if>
+            <if test="null != updateTime">update_time = #{updateTime},</if>
             <if test="null != cardStatus and '' != cardStatus">card_status = #{cardStatus},</if>
             <if test="null != unitSeq and '' != unitSeq">unit_seq = #{unitSeq},</if>
             <if test="null != enterOrExit and '' != enterOrExit">enter_or_exit = #{enterOrExit},</if>

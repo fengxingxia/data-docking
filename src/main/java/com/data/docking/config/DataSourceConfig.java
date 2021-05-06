@@ -48,7 +48,7 @@ public class DataSourceConfig {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
         bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(
-                "classpath*:/mapper/*.xml"));
+                "classpath*:mapper/primary/*.xml"));
         SqlSessionFactory sessionFactory = bean.getObject();
         if (sessionFactory != null) {
             sessionFactory.getConfiguration().setMapUnderscoreToCamelCase(true);

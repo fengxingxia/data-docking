@@ -89,7 +89,7 @@
     </sql>
 
     <insert id="insert" useGeneratedKeys="true" keyColumn="id" keyProperty="id"
-            parameterType="www.bejson.com.entity.PCarCaptureEntity">
+            parameterType="com.data.docking.domain.CarCapture">
         INSERT INTO ipms.p_car_capture
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="null != devId and '' != devId">
@@ -137,7 +137,7 @@
             <if test="null != carBrand and '' != carBrand">
                 car_brand,
             </if>
-            <if test="null != capTime and '' != capTime">
+            <if test="null != capTime">
                 cap_time,
             </if>
             <if test="null != infNote and '' != infNote">
@@ -253,7 +253,7 @@
             <if test="null != carBrand and '' != carBrand">
                 #{carBrand},
             </if>
-            <if test="null != capTime and '' != capTime">
+            <if test="null != capTime">
                 #{capTime},
             </if>
             <if test="null != infNote and '' != infNote">
@@ -331,7 +331,7 @@
         WHERE id = #{id}
     </delete>
 
-    <update id="update" parameterType="www.bejson.com.entity.PCarCaptureEntity">
+    <update id="update" parameterType="com.data.docking.domain.CarCapture">
         UPDATE ipms.p_car_capture
         <set>
             <if test="null != devId and '' != devId">dev_id = #{devId},</if>
@@ -349,7 +349,7 @@
             <if test="null != carDirect and '' != carDirect">car_direct = #{carDirect},</if>
             <if test="null != carWayCode and '' != carWayCode">car_way_code = #{carWayCode},</if>
             <if test="null != carBrand and '' != carBrand">car_brand = #{carBrand},</if>
-            <if test="null != capTime and '' != capTime">cap_time = #{capTime},</if>
+            <if test="null != capTime">cap_time = #{capTime},</if>
             <if test="null != infNote and '' != infNote">inf_note = #{infNote},</if>
             <if test="null != maxSpeed and '' != maxSpeed">max_speed = #{maxSpeed},</if>
             <if test="null != minSpeed and '' != minSpeed">min_speed = #{minSpeed},</if>
