@@ -42,6 +42,9 @@ public class DataDockingService {
     @Value("${car.inout.host.port}")
     private String thirdHost;
 
+    @Value("${swing.card.device.code}")
+    private String swingCardDeviceCode;
+
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     private static final String IN_CAR_URL = "/InVehicle/GetByCustom";
@@ -76,10 +79,11 @@ public class DataDockingService {
     private SwingCardRecord buildSwingCardRecord(ThirdPartOpenDoorRecord openDoorRecord) throws Exception {
         SwingCardRecord swingCardRecord = new SwingCardRecord();
         swingCardRecord.setRecordNo(openDoorRecord.getOpendoorRecordId());
-        swingCardRecord.setDeviceCode(openDoorRecord.getUniqueNumber());
+        swingCardRecord.setDeviceCode(swingCardDeviceCode);
         swingCardRecord.setOpenType(parseOpenType(openDoorRecord.getOpenType()));
         swingCardRecord.setSwingTime(sdf.parse(openDoorRecord.getOpenTime()));
-        swingCardRecord.setCardNumber(openDoorRecord.getCardParams().getCardNumber());
+        swingCardRecord.setCardNumber(Objects.nonNull(openDoorRecord.getCardParams())
+                ? openDoorRecord.getCardParams().getCardNumber() : "");
         String picture1 = openDoorRecord.getFaceParams().getFaceUrl();
         byte[] imageBytes = HttpClientPoolUtil.getResponseBytes(picture1, null);
         if (imageBytes.length > 0) {

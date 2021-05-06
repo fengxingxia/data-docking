@@ -22,7 +22,7 @@ import javax.sql.DataSource;
  * @since 2021/3/23
  */
 @Configuration
-@MapperScan(basePackages = "com.**.mapper", sqlSessionTemplateRef = "sqlSessionTemplate")
+@MapperScan(basePackages = "com.data.docking.mapper", sqlSessionTemplateRef = "sqlSessionTemplate")
 public class DataSourceConfig {
 
     /**

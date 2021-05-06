@@ -1,5 +1,6 @@
 package com.data.docking.util;
 
+import com.data.docking.config.PropertiesConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.Header;
@@ -16,7 +17,7 @@ public class OssUtil {
     private static final String NEWLINE = "\r\n";
     private static final String BOUNDARYPREFIX = "--";
 
-    private static String ossIp = "";
+    private static PropertiesConfig config = SpringApplicationContext.getBean(PropertiesConfig.class);
 
     /**
      * 上传图片并获取oss图片地址
@@ -37,7 +38,7 @@ public class OssUtil {
         long start = System.currentTimeMillis();
         String ossImgUrl = uploadImgByOSS(imgBase64);
         if (ossImgUrl != null) {
-            return "http://" + ossIp + "/" + ossImgUrl;
+            return "http://" + config.getOssIp() + "/" + ossImgUrl;
         }
         return "";
     }
@@ -48,7 +49,7 @@ public class OssUtil {
         }
         try {
             String fileName = "1_" + System.currentTimeMillis() + ".jpg";
-            String url = "http://" + ossIp + "/webupload/1.0/" + fileName;
+            String url = "http://" + config.getOssIp() + "/webupload/1.0/" + fileName;
 
             byte[] decode = Base64Utils.decode(imgBase64.getBytes());
 
