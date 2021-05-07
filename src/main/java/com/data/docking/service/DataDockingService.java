@@ -93,8 +93,9 @@ public class DataDockingService {
         swingCardRecord.setOpenResult(1);
         swingCardRecord.setCreateTime(sdf.parse(sdf.format(new Date())));
         swingCardRecord.setUpdateTime(sdf.parse(sdf.format(new Date())));
-        swingCardRecord.setUnitSeq(1L);
+        swingCardRecord.setUnitSeq(0L);
         swingCardRecord.setEnterOrExit(1);
+        swingCardRecord.setChannelCode(swingCardDeviceCode + "$7$0$0");
 
         return swingCardRecord;
     }
