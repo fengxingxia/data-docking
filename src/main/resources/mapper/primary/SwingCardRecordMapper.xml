@@ -103,10 +103,10 @@
             <if test="null != readerName and '' != readerName">
                 reader_name,
             </if>
-            <if test="null != openType and '' != openType">
+            <if test="null != openType">
                 open_type,
             </if>
-            <if test="null != businessType and '' != businessType">
+            <if test="null != businessType">
                 business_type,
             </if>
             <if test="null != orgCode and '' != orgCode">
@@ -118,7 +118,7 @@
             <if test="null != cardNumber and '' != cardNumber">
                 card_number,
             </if>
-            <if test="null != cardType and '' != cardType">
+            <if test="null != cardType">
                 card_type,
             </if>
             <if test="null != personCode and '' != personCode">
@@ -130,7 +130,7 @@
             <if test="null != swingTime">
                 swing_time,
             </if>
-            <if test="null != openResult and '' != openResult">
+            <if test="null != openResult">
                 open_result,
             </if>
             <if test="null != picutre1 and '' != picutre1">
@@ -151,13 +151,13 @@
             <if test="null != updateTime">
                 update_time,
             </if>
-            <if test="null != cardStatus and '' != cardStatus">
+            <if test="null != cardStatus">
                 card_status,
             </if>
-            <if test="null != unitSeq and '' != unitSeq">
+            <if test="null != unitSeq">
                 unit_seq,
             </if>
-            <if test="null != enterOrExit and '' != enterOrExit">
+            <if test="null != enterOrExit">
                 enter_or_exit,
             </if>
             <if test="null != prev and '' != prev">
@@ -175,14 +175,17 @@
             <if test="null != remark and '' != remark">
                 remark,
             </if>
-            <if test="null != paperType and '' != paperType">
+            <if test="null != paperType">
                 paper_type,
             </if>
             <if test="null != paperNumber and '' != paperNumber">
                 paper_number,
             </if>
             <if test="null != deviceModel and '' != deviceModel">
-                device_model
+                device_model,
+            </if>
+            <if test="null != recordImage and '' != recordImage">
+                record_image
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -207,10 +210,10 @@
             <if test="null != readerName and '' != readerName">
                 #{readerName},
             </if>
-            <if test="null != openType and '' != openType">
+            <if test="null != openType">
                 #{openType},
             </if>
-            <if test="null != businessType and '' != businessType">
+            <if test="null != businessType">
                 #{businessType},
             </if>
             <if test="null != orgCode and '' != orgCode">
@@ -222,7 +225,7 @@
             <if test="null != cardNumber and '' != cardNumber">
                 #{cardNumber},
             </if>
-            <if test="null != cardType and '' != cardType">
+            <if test="null != cardType">
                 #{cardType},
             </if>
             <if test="null != personCode and '' != personCode">
@@ -234,7 +237,7 @@
             <if test="null != swingTime">
                 #{swingTime},
             </if>
-            <if test="null != openResult and '' != openResult">
+            <if test="null != openResult">
                 #{openResult},
             </if>
             <if test="null != picutre1 and '' != picutre1">
@@ -255,13 +258,13 @@
             <if test="null != updateTime">
                 #{updateTime},
             </if>
-            <if test="null != cardStatus and '' != cardStatus">
+            <if test="null != cardStatus">
                 #{cardStatus},
             </if>
-            <if test="null != unitSeq and '' != unitSeq">
+            <if test="null != unitSeq">
                 #{unitSeq},
             </if>
-            <if test="null != enterOrExit and '' != enterOrExit">
+            <if test="null != enterOrExit">
                 #{enterOrExit},
             </if>
             <if test="null != prev and '' != prev">
@@ -279,7 +282,7 @@
             <if test="null != remark and '' != remark">
                 #{remark},
             </if>
-            <if test="null != paperType and '' != paperType">
+            <if test="null != paperType">
                 #{paperType},
             </if>
             <if test="null != paperNumber and '' != paperNumber">
@@ -287,6 +290,9 @@
             </if>
             <if test="null != deviceModel and '' != deviceModel">
                 #{deviceModel}
+            </if>
+            <if test="null != recordImage and '' != recordImage">
+                #{recordImage}
             </if>
         </trim>
     </insert>

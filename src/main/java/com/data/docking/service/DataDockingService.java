@@ -64,6 +64,7 @@ public class DataDockingService {
         }
         ThirdPartOpenDoorRecord openDoorRecord = JSONObject.parseObject(record, ThirdPartOpenDoorRecord.class);
         SwingCardRecord swingCardRecord = buildSwingCardRecord(openDoorRecord);
+        log.info("保存的数据，{}", JSONObject.toJSONString(swingCardRecord));
         swingCardRecordMapper.insert(swingCardRecord);
 
         return Response.buildSuccess();
@@ -89,6 +90,7 @@ public class DataDockingService {
         if (imageBytes.length > 0) {
             picture1 = OssUtil.getImgUrl(Base64.encodeBase64String(imageBytes));
         }
+        swingCardRecord.setRecordImage(picture1);
         swingCardRecord.setPicutre1(picture1);
         swingCardRecord.setOpenResult(1);
         swingCardRecord.setCreateTime(sdf.parse(sdf.format(new Date())));
@@ -286,7 +288,7 @@ public class DataDockingService {
      * @return
      */
     private Integer parseOpenType(Integer thirdOpenType) {
-        return 1;
+        return 61;
     }
 
 }

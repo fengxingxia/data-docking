@@ -188,4 +188,6 @@ public class SwingCardRecord {
      */
     private String deviceModel;
 
+    private String recordImage;
+
 }
