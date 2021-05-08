@@ -22,28 +22,28 @@ import javax.sql.DataSource;
  * @since 2021/3/23
  */
 @Configuration
-@MapperScan(basePackages = "com.data.docking.mapper", sqlSessionTemplateRef = "sqlSessionTemplate")
-public class DataSourceConfig {
+@MapperScan(basePackages = "com.data.docking.mapper.primary", sqlSessionTemplateRef = "primarySqlSessionTemplate")
+public class PrimaryDataSourceConfig {
 
     /**
-     * 第三方数据源
+     * 主数据源
      * @return
      */
-    @Bean(name = "dataSource")
-    @ConfigurationProperties(prefix = "spring.datasource")
+    @Bean(name = "primaryDataSource")
+    @ConfigurationProperties(prefix = "spring.datasource.primary")
     public DataSource odcDataSource() {
         return DruidDataSourceBuilder.create().build();
     }
 
     /**
-     * 第三方数据源sql session factory
+     * 主数据源sql session factory
      *
      * @param dataSource
      * @return
      * @throws Exception
      */
-    @Bean(name = "sqlSessionFactory")
-    public SqlSessionFactory primarySqlSessionFactory(@Qualifier("dataSource") DataSource dataSource)
+    @Bean(name = "primarySqlSessionFactory")
+    public SqlSessionFactory primarySqlSessionFactory(@Qualifier("primaryDataSource") DataSource dataSource)
             throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
@@ -57,24 +57,24 @@ public class DataSourceConfig {
     }
 
     /**
-     * 第三方数据源事务管理器
+     * 主数据源事务管理器
      *
      * @param dataSource
      * @return
      */
-    @Bean(name = "transactionManager")
-    public PlatformTransactionManager odcTransactionManager(@Qualifier("dataSource") DataSource dataSource) {
+    @Bean(name = "primaryTransactionManager")
+    public PlatformTransactionManager odcTransactionManager(@Qualifier("primaryDataSource") DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 
     /**
-     * 第三方数据源SQL template
+     * 主数据源SQL template
      *
      * @param sqlSessionFactory
      * @return
      */
-    @Bean(name = "sqlSessionTemplate")
-    public SqlSessionTemplate visualSqlSessionTemplate(@Qualifier("sqlSessionFactory") SqlSessionFactory sqlSessionFactory) {
+    @Bean(name = "primarySqlSessionTemplate")
+    public SqlSessionTemplate visualSqlSessionTemplate(@Qualifier("primarySqlSessionFactory") SqlSessionFactory sqlSessionFactory) {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 

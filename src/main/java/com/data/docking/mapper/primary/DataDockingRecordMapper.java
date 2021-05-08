@@ -1,4 +1,4 @@
-package com.data.docking.mapper;
+package com.data.docking.mapper.primary;
 
 import com.data.docking.domain.DataDockingRecord;
 import org.apache.ibatis.annotations.Mapper;
