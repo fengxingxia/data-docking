@@ -64,7 +64,6 @@ public class DataDockingService {
         }
         ThirdPartOpenDoorRecord openDoorRecord = JSONObject.parseObject(record, ThirdPartOpenDoorRecord.class);
         SwingCardRecord swingCardRecord = buildSwingCardRecord(openDoorRecord);
-        log.info("保存的数据，{}", JSONObject.toJSONString(swingCardRecord));
         swingCardRecordMapper.insert(swingCardRecord);
 
         return Response.buildSuccess();
@@ -98,6 +97,7 @@ public class DataDockingService {
         swingCardRecord.setUnitSeq(0L);
         swingCardRecord.setEnterOrExit(1);
         swingCardRecord.setChannelCode(swingCardDeviceCode + "$7$0$0");
+        swingCardRecord.setChannelName("柏林春天_门禁_通道1");
 
         return swingCardRecord;
     }

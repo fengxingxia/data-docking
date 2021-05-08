@@ -35,7 +35,7 @@ public class DockOpenRecordController {
      * @return
      */
     @ResponseBody
-    @PostMapping("/opendoor/record")
+    @RequestMapping("/opendoor/record")
     public String roomList(HttpServletRequest request ) {
         try {
             BufferedReader reader = request.getReader();
