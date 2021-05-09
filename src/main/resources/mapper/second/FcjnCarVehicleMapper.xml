@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.data.docking.mapper.second.FcjnCarVehicleMapper">
+
+    <select id="listOutVehicle" resultType="com.data.docking.domain.FcjnCarOutVehicle">
+        select
+            top 50 Id, ParkingId, TokenType, StaffNo, StaffName, OutAutoPlate, OutTime,
+            OutPicture, OutPicture2, OutPictureStaff, OutType
+        from OutVehicle where id &gt; #{id}
+    </select>
+
+    <select id="listInVehicle" resultType="com.data.docking.domain.FcjnCarInVehicle">
+        select
+            top 50 Id, ParkingId, TokenType, StaffNo, StaffName, InAutoPlate, InTime,
+            InPicture, InPicture2, InPictureStaff
+        from OutVehicle where id &gt; #{id}
+    </select>
+
+</mapper>
