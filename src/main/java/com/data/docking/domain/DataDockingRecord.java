@@ -45,4 +45,6 @@ public class DataDockingRecord implements Serializable {
      */
     private Integer currentPage;
 
+    private String areaName = "翡翠江南";
+
 }

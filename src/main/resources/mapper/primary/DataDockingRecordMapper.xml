@@ -10,6 +10,7 @@
         <result column="latest_sync_time" property="latestSyncTime"/>
         <result column="current_sync_num" property="currentSyncNum"/>
         <result column="sync_total" property="syncTotal"/>
+        <result column="area_Name" property="areaName"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -40,6 +41,9 @@
             <if test="null != syncTotal and '' != syncTotal">
                 sync_total
             </if>
+            <if test="null != areaName and '' != areaName">
+                area_name
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="null != type and '' != type">
@@ -56,6 +60,9 @@
             </if>
             <if test="null != syncTotal and '' != syncTotal">
                 #{syncTotal}
+            </if>
+            <if test="null != areaName and '' != areaName">
+                #{areaName}
             </if>
         </trim>
     </insert>

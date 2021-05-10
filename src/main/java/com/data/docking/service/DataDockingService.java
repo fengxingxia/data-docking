@@ -4,7 +4,9 @@ import com.data.docking.constant.BusinessTypeConstant;
 import com.data.docking.domain.*;
 import com.data.docking.mapper.primary.CarCaptureMapper;
 import com.data.docking.mapper.primary.DataDockingRecordMapper;
+import com.data.docking.mapper.primary.SwingCardRecordMapper;
 import com.data.docking.mapper.second.FcjnCarVehicleMapper;
+import com.data.docking.mapper.second.FcjnOpenDoorRecordMaper;
 import com.data.docking.util.HttpClientPoolUtil;
 import com.data.docking.util.OssUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +37,13 @@ public class DataDockingService {
     private FcjnCarVehicleMapper fcjnCarVehicleMapper;
 
     @Autowired
+    private FcjnOpenDoorRecordMaper fcjnOpenDoorRecordMaper;
+
+    @Autowired
     private CarCaptureMapper carCaptureMapper;
+
+    @Autowired
+    private SwingCardRecordMapper swingCardRecordMapper;
 
     @Value("${car.inout.host.port}")
     private String thirdHost;
@@ -63,9 +71,22 @@ public class DataDockingService {
      * @param record 第三方开门记录
      * @return 处理结果
      */
-    public Response dockingOpenDoorRecord(String record) throws Exception {
+    public void dockingOpenDoorRecord() throws Exception {
+        DataDockingRecord dataDockingRecord = queryDataDocking(BusinessTypeConstant.SWING_CARD_RECORD);
+        String syncPosition = Objects.isNull(dataDockingRecord) ? "0" : dataDockingRecord.getSyncRecordPosition();
+        Integer currentSynNum = 0;
+        // 查询第三方数据库
+        List<FcjnOpenGateRecord> fcjnOpenGateRecords = fcjnOpenDoorRecordMaper.listOpenDoorRecord(Long.parseLong(syncPosition));
 
-        return Response.buildSuccess();
+        saveSwingCardRecord(fcjnOpenGateRecords);
+
+        // 更新同步记录
+        if (Objects.isNull(dataDockingRecord)) {
+            dataDockingRecordMapper.insert(createDataDocking(0L, currentSynNum, BusinessTypeConstant.CAR_CAPTURE_IN, syncPosition));
+        } else {
+            dataDockingRecordMapper.update(createDataDocking(dataDockingRecord.getId(), currentSynNum,
+                    BusinessTypeConstant.CAR_CAPTURE_IN, syncPosition));
+        }
     }
 
     /**
@@ -75,30 +96,24 @@ public class DataDockingService {
      * @return
      * @throws ParseException
      */
-    private SwingCardRecord buildSwingCardRecord(ThirdPartOpenDoorRecord openDoorRecord) throws Exception {
-        SwingCardRecord swingCardRecord = new SwingCardRecord();
-        swingCardRecord.setRecordNo(openDoorRecord.getOpendoorRecordId());
-        swingCardRecord.setDeviceCode(swingCardDeviceCode);
-        swingCardRecord.setOpenType(parseOpenType(openDoorRecord.getOpenType()));
-        swingCardRecord.setSwingTime(sdf.parse(openDoorRecord.getOpenTime()));
-        swingCardRecord.setCardNumber(Objects.nonNull(openDoorRecord.getCardParams())
-                ? openDoorRecord.getCardParams().getCardNumber() : "");
-        String picture1 = openDoorRecord.getFaceParams().getFaceUrl();
-        byte[] imageBytes = HttpClientPoolUtil.getResponseBytes(picture1, null);
-        if (imageBytes.length > 0) {
-            picture1 = OssUtil.getImgUrl(Base64.encodeBase64String(imageBytes));
+    private void saveSwingCardRecord(List<FcjnOpenGateRecord> fcjnOpenGateRecords) throws Exception {
+        for (FcjnOpenGateRecord record : fcjnOpenGateRecords) {
+            SwingCardRecord swingCardRecord = new SwingCardRecord();
+            swingCardRecord.setRecordNo(record.getId());
+            swingCardRecord.setDeviceCode(swingCardDeviceCode);
+            swingCardRecord.setOpenType(parseOpenType(record.getTcmName()));
+            swingCardRecord.setSwingTime(record.getOpenDate());
+            swingCardRecord.setOpenResult(1);
+            swingCardRecord.setCreateTime(sdf.parse(sdf.format(new Date())));
+            swingCardRecord.setUpdateTime(sdf.parse(sdf.format(new Date())));
+            swingCardRecord.setUnitSeq(0L);
+            swingCardRecord.setEnterOrExit(1);
+            swingCardRecord.setChannelCode(swingCardDeviceCode + "$7$0$0");
+            swingCardRecord.setChannelName("柏林春天_门禁_通道1");
+            swingCardRecord.setPersonCode(record.getStaffNo());
+            swingCardRecord.setPersonName(record.getStaffName());
+            swingCardRecordMapper.insert(swingCardRecord);
         }
-        swingCardRecord.setRecordImage(picture1);
-        swingCardRecord.setPicutre1(picture1);
-        swingCardRecord.setOpenResult(1);
-        swingCardRecord.setCreateTime(sdf.parse(sdf.format(new Date())));
-        swingCardRecord.setUpdateTime(sdf.parse(sdf.format(new Date())));
-        swingCardRecord.setUnitSeq(0L);
-        swingCardRecord.setEnterOrExit(1);
-        swingCardRecord.setChannelCode(swingCardDeviceCode + "$7$0$0");
-        swingCardRecord.setChannelName("柏林春天_门禁_通道1");
-
-        return swingCardRecord;
     }
 
     /**
@@ -137,7 +152,7 @@ public class DataDockingService {
 
         List<FcjnCarInVehicle> fcjnCarInVehicles = fcjnCarVehicleMapper.listInVehicle(Long.parseLong(syncPosition));
 
-        saveCarInCapture(fcjnCarInVehicles);
+//        saveCarInCapture(fcjnCarInVehicles);
 
         // 更新同步记录
         if (Objects.isNull(dataDockingRecord)) {
@@ -160,12 +175,14 @@ public class DataDockingService {
 
         saveCarOutCapture(fcjnCarOutVehicles);
 
+        saveCarInCapture(fcjnCarOutVehicles);
+
         // 更新同步记录
         if (Objects.isNull(dataDockingRecord)) {
             dataDockingRecordMapper.insert(createDataDocking(0L, currentSynNum, BusinessTypeConstant.CAR_CAPTURE_OUT, syncPosition));
         } else {
             dataDockingRecordMapper.update(createDataDocking(dataDockingRecord.getId(), currentSynNum,
-                    BusinessTypeConstant.CAR_CAPTURE_IN, syncPosition));
+                    BusinessTypeConstant.CAR_CAPTURE_OUT, syncPosition));
         }
     }
 
@@ -175,7 +192,7 @@ public class DataDockingService {
      * @param records
      * @return
      */
-    public void saveCarInCapture(List<FcjnCarInVehicle> records) {
+    public void saveCarInCapture(List<FcjnCarOutVehicle> records) {
         if (CollectionUtils.isEmpty(records)) {
             return;
         }
@@ -185,7 +202,7 @@ public class DataDockingService {
             carCapture.setDevChnid(carCaptureInDeviceCode + "$1$0$0");
             carCapture.setDevChnnum(0);
             carCapture.setDevChnname(carCaptureInChannelName);
-            carCapture.setCarNum(record.getRegPlate());
+            carCapture.setCarNum(record.getInAutoPlate());
             carCapture.setCarDirect("1");
             carCapture.setCapTime(record.getInTime());
             try {
@@ -253,8 +270,11 @@ public class DataDockingService {
      *
      * @return
      */
-    private Integer parseOpenType(Integer thirdOpenType) {
-        return 61;
+    private Integer parseOpenType(String tcmName) {
+        if (tcmName.contains("按钮")) {
+            return 49;
+        }
+        return 51;
     }
 
 }

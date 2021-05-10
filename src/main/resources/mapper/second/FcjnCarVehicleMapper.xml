@@ -6,7 +6,8 @@
     <select id="listOutVehicle" resultType="com.data.docking.domain.FcjnCarOutVehicle">
         select
             top 50 Id, ParkingId, TokenType, StaffNo, StaffName, OutAutoPlate, OutTime,
-            OutPicture, OutPicture2, OutPictureStaff, OutType
+            OutPicture, OutPicture2, OutPictureStaff, OutType,
+            InAutoPlate, InTime, InPicture, InPicture2, InPictureStaff
         from OutVehicle where id &gt; #{id}
     </select>
 

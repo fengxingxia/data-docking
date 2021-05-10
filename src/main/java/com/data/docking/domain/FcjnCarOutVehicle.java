@@ -84,6 +84,8 @@ public class FcjnCarOutVehicle {
      */
     private String InPictureStaff;
 
+    private Date InTime;
+
     /**
      * 出场识别车牌
      */

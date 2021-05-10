@@ -4,6 +4,7 @@ import com.data.docking.service.DataDockingService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Slf4j
+@PropertySource(value = "classpath:application.properties")
 public class TimerTask {
 
     @Autowired
@@ -29,6 +31,10 @@ public class TimerTask {
         } catch (Exception e) {
             log.error("同步车辆过车记录异常", e);
         }
+    }
+
+    public void syncSwingCardRecord() {
+
     }
 
 }

@@ -19,10 +19,18 @@ public class FcjnOpenGateRecord {
      */
     private Long Id;
 
-    private Date CreateTime;
+    private Date OpenDate;
 
-    private String Picture;
+    private String StaffNo;
 
-    private Integer InOrOut;
+    private String StaffName;
+
+    private String OrganizationName;
+
+    private String DevNo;
+
+    private String DevName;
+
+    private String TcmName;
 
 }
