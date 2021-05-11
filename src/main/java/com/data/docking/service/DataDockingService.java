@@ -54,14 +54,15 @@ public class DataDockingService {
     @Value("${car.capture.in.device.code}")
     private String carCaptureInDeviceCode;
 
-    @Value("${car.capture.in.channel.name}")
-    private String carCaptureInChannelName;
+    private String carCaptureInChannelName = "翡翠江南_车闸设备";
 
     @Value("${car.capture.out.device.code}")
     private String carCaptureOutDeviceCode;
 
-    @Value("${car.capture.out.channel.name}")
-    private String carCaptureOutChannelName;
+    @Value("${oss.ip}")
+    private String ossIp;
+
+    private String carCaptureOutChannelName = "翡翠江南_车闸设备";
 
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -72,6 +73,7 @@ public class DataDockingService {
      * @return 处理结果
      */
     public void dockingOpenDoorRecord() throws Exception {
+        log.info("开始同步刷卡记录");
         DataDockingRecord dataDockingRecord = queryDataDocking(BusinessTypeConstant.SWING_CARD_RECORD);
         String syncPosition = Objects.isNull(dataDockingRecord) ? "0" : dataDockingRecord.getSyncRecordPosition();
         Integer currentSynNum = 0;
@@ -82,11 +84,13 @@ public class DataDockingService {
 
         // 更新同步记录
         if (Objects.isNull(dataDockingRecord)) {
-            dataDockingRecordMapper.insert(createDataDocking(0L, currentSynNum, BusinessTypeConstant.CAR_CAPTURE_IN, syncPosition));
+            dataDockingRecordMapper.insert(createDataDocking(0L, currentSynNum, BusinessTypeConstant.SWING_CARD_RECORD, syncPosition));
         } else {
+            syncPosition = String.valueOf(fcjnOpenGateRecords.get(fcjnOpenGateRecords.size() - 1).getId());
             dataDockingRecordMapper.update(createDataDocking(dataDockingRecord.getId(), currentSynNum,
-                    BusinessTypeConstant.CAR_CAPTURE_IN, syncPosition));
+                    BusinessTypeConstant.SWING_CARD_RECORD, syncPosition));
         }
+        log.info("刷卡记录同步完成，本次同步: {}条", fcjnOpenGateRecords.size());
     }
 
     /**
@@ -109,7 +113,7 @@ public class DataDockingService {
             swingCardRecord.setUnitSeq(0L);
             swingCardRecord.setEnterOrExit(1);
             swingCardRecord.setChannelCode(swingCardDeviceCode + "$7$0$0");
-            swingCardRecord.setChannelName("柏林春天_门禁_通道1");
+            swingCardRecord.setChannelName("翡翠江南_门禁设备_通道1");
             swingCardRecord.setPersonCode(record.getStaffNo());
             swingCardRecord.setPersonName(record.getStaffName());
             swingCardRecordMapper.insert(swingCardRecord);
@@ -123,7 +127,7 @@ public class DataDockingService {
      * @return
      */
     public DataDockingRecord queryDataDocking(int type) {
-        return dataDockingRecordMapper.queryByType(type);
+        return dataDockingRecordMapper.queryByType(type, BusinessTypeConstant.DATA_SOURCE);
     }
 
     /**
@@ -142,31 +146,10 @@ public class DataDockingService {
     }
 
     /**
-     * 同步车辆进场记录
-     */
-    public void syncCarInCapture() throws Exception {
-        DataDockingRecord dataDockingRecord = queryDataDocking(BusinessTypeConstant.CAR_CAPTURE_IN);
-        String syncPosition = Objects.isNull(dataDockingRecord) ? "0" : dataDockingRecord.getSyncRecordPosition();
-        Integer currentSynNum = 0;
-        // 查询第三方数据库
-
-        List<FcjnCarInVehicle> fcjnCarInVehicles = fcjnCarVehicleMapper.listInVehicle(Long.parseLong(syncPosition));
-
-//        saveCarInCapture(fcjnCarInVehicles);
-
-        // 更新同步记录
-        if (Objects.isNull(dataDockingRecord)) {
-            dataDockingRecordMapper.insert(createDataDocking(0L, currentSynNum, BusinessTypeConstant.CAR_CAPTURE_IN, syncPosition));
-        } else {
-            dataDockingRecordMapper.update(createDataDocking(dataDockingRecord.getId(), currentSynNum,
-                    BusinessTypeConstant.CAR_CAPTURE_IN, syncPosition));
-        }
-    }
-
-    /**
      * 同步车辆出场记录
      */
     public void syncCarOutCapture() throws Exception {
+        log.info("开始同步过车记录");
         DataDockingRecord dataDockingRecord = queryDataDocking(BusinessTypeConstant.CAR_CAPTURE_OUT);
         String syncPosition = Objects.isNull(dataDockingRecord) ? "0" : dataDockingRecord.getSyncRecordPosition();
         Integer currentSynNum = 0;
@@ -181,9 +164,11 @@ public class DataDockingService {
         if (Objects.isNull(dataDockingRecord)) {
             dataDockingRecordMapper.insert(createDataDocking(0L, currentSynNum, BusinessTypeConstant.CAR_CAPTURE_OUT, syncPosition));
         } else {
+            syncPosition = String.valueOf(fcjnCarOutVehicles.get(fcjnCarOutVehicles.size() - 1).getId());
             dataDockingRecordMapper.update(createDataDocking(dataDockingRecord.getId(), currentSynNum,
                     BusinessTypeConstant.CAR_CAPTURE_OUT, syncPosition));
         }
+        log.info("同步过车记录结束，本次共同步: {}条", fcjnCarOutVehicles.size());
     }
 
     /**
@@ -202,11 +187,14 @@ public class DataDockingService {
             carCapture.setDevChnid(carCaptureInDeviceCode + "$1$0$0");
             carCapture.setDevChnnum(0);
             carCapture.setDevChnname(carCaptureInChannelName);
-            carCapture.setCarNum(record.getInAutoPlate());
+            carCapture.setCarNum(record.getTokenNo());
             carCapture.setCarDirect("1");
             carCapture.setCapTime(record.getInTime());
             try {
-                carCapture.setCarImgUrl(OssUtil.uploadAndGetImgUrl(record.getInPicture()));
+                String imgUrl = OssUtil.uploadAndGetImgUrl(record.getInPicture());
+                carCapture.setCarImgUrl(imgUrl);
+                String carNumImg = OssUtil.uploadAndGetImgUrl(record.getInPicture2());
+                carCapture.setCarNumPic(carNumImg);
             } catch (Exception e) {
                 log.error("上传车辆抓拍图片到oss异常", e);
             }
@@ -233,11 +221,14 @@ public class DataDockingService {
             carCapture.setDevChnid(carCaptureOutDeviceCode + "$1$0$0");
             carCapture.setDevChnnum(0);
             carCapture.setDevChnname(carCaptureOutChannelName);
-            carCapture.setCarNum(record.getRegPlate());
+            carCapture.setCarNum(record.getTokenNo());
             carCapture.setCarDirect("9");
             carCapture.setCapTime(record.getOutTime());
             try {
-                carCapture.setCarImgUrl(OssUtil.uploadAndGetImgUrl(record.getInPicture()));
+                String imgUrl = OssUtil.uploadAndGetImgUrl(record.getOutPicture());
+                carCapture.setCarImgUrl(imgUrl);
+                String carNumImg = OssUtil.uploadAndGetImgUrl(record.getOutPicture2());
+                carCapture.setCarNumPic(carNumImg);
             } catch (Exception e) {
                 log.error("上传车辆抓拍图片到oss异常", e);
             }

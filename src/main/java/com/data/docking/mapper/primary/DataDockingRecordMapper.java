@@ -65,6 +65,6 @@ public interface DataDockingRecordMapper {
      * @param type
      * @return
      */
-    DataDockingRecord queryByType(@Param("type") int type);
+    DataDockingRecord queryByType(@Param("type") int type, @Param("areaName") String areaName);
 
 }

@@ -110,7 +110,7 @@
     <select id="queryByType" resultMap="BaseResultMap">
         select <include refid="Base_Column_List" />
         from data_docking_record
-        where type = #{type}
+        where type = #{type} and area_name = #{areaName}
     </select>
 
 </mapper>

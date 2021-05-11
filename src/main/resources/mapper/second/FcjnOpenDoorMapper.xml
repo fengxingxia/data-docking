@@ -3,10 +3,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.data.docking.mapper.second.FcjnOpenDoorRecordMaper">
 
-    <select id="listOpenDoorRecord" resultType="com.data.docking.domain.FcjnCarOutVehicle">
+    <select id="listOpenDoorRecord" resultType="com.data.docking.domain.FcjnOpenGateRecord">
         select
-            top 50 Id, StaffName, OrganizationName, DevNo, DoorNo, DevName, OpenDate, TcnName
+            top 50 Id, StaffName, OrganizationName, DevNo, DoorNo, DevName, OpenDate, TcmName
         from DmsOpenRecord where id &gt; #{id}
+        order by Id asc
     </select>
 
 </mapper>

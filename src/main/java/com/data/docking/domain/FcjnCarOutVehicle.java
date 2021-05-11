@@ -106,6 +106,8 @@ public class FcjnCarOutVehicle {
      */
     private String OutPicture;
 
+    private String OutPicture2;
+
     /**
      * 出场人图
      */

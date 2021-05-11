@@ -14,6 +14,6 @@ public class BusinessTypeConstant {
 
     public static final Integer SWING_CARD_RECORD = 3;
 
-    private static final String DATA_SOURCE = "翡翠江南";
+    public static final String DATA_SOURCE = "翡翠江南";
 
 }

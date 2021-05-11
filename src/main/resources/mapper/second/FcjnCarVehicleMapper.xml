@@ -7,8 +7,9 @@
         select
             top 50 Id, ParkingId, TokenType, StaffNo, StaffName, OutAutoPlate, OutTime,
             OutPicture, OutPicture2, OutPictureStaff, OutType,
-            InAutoPlate, InTime, InPicture, InPicture2, InPictureStaff
+            InAutoPlate, InTime, InPicture, InPicture2, InPictureStaff, InLaneName, OutLaneName, TokenNo
         from OutVehicle where id &gt; #{id}
+        order by Id asc
     </select>
 
     <select id="listInVehicle" resultType="com.data.docking.domain.FcjnCarInVehicle">

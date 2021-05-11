@@ -92,13 +92,13 @@
             parameterType="com.data.docking.domain.CarCapture">
         INSERT INTO ipms.p_car_capture
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="null != devId and '' != devId">
+            <if test="null != devId">
                 dev_id,
             </if>
-            <if test="null != devChnid and '' != devChnid">
+            <if test="null != devChnid">
                 dev_chnid,
             </if>
-            <if test="null != devChnnum and '' != devChnnum">
+            <if test="null != devChnnum">
                 dev_chnnum,
             </if>
             <if test="null != devName and '' != devName">
@@ -110,7 +110,7 @@
             <if test="null != carNum and '' != carNum">
                 car_num,
             </if>
-            <if test="null != carNumtype and '' != carNumtype">
+            <if test="null != carNumtype">
                 car_numtype,
             </if>
             <if test="null != carNumcolor and '' != carNumcolor">
@@ -119,13 +119,13 @@
             <if test="null != carSpeed and '' != carSpeed">
                 car_speed,
             </if>
-            <if test="null != carType and '' != carType">
+            <if test="null != carType">
                 car_type,
             </if>
             <if test="null != carColor and '' != carColor">
                 car_color,
             </if>
-            <if test="null != carLength and '' != carLength">
+            <if test="null != carLength">
                 car_length,
             </if>
             <if test="null != carDirect and '' != carDirect">
@@ -155,7 +155,7 @@
             <if test="null != carNumPic and '' != carNumPic">
                 car_num_pic,
             </if>
-            <if test="null != recStat and '' != recStat">
+            <if test="null != recStat">
                 rec_stat,
             </if>
             <if test="null != saveFlag and '' != saveFlag">
@@ -176,19 +176,19 @@
             <if test="null != parkingLotCode and '' != parkingLotCode">
                 parking_lot_code,
             </if>
-            <if test="null != enterId and '' != enterId">
+            <if test="null != enterId">
                 enter_id,
             </if>
-            <if test="null != parkingCarType and '' != parkingCarType">
+            <if test="null != parkingCarType">
                 parking_car_type,
             </if>
-            <if test="null != parkingCarSubType and '' != parkingCarSubType">
+            <if test="null != parkingCarSubType">
                 parking_car_sub_type,
             </if>
             <if test="null != parkingCarCbirfeature and '' != parkingCarCbirfeature">
                 parking_car_cbirfeature,
             </if>
-            <if test="null != vehicleHeadDirection and '' != vehicleHeadDirection">
+            <if test="null != vehicleHeadDirection">
                 vehicle_head_direction,
             </if>
             <if test="null != parkingCarColor and '' != parkingCarColor">
@@ -200,7 +200,7 @@
             <if test="null != subSystemIp and '' != subSystemIp">
                 sub_system_ip,
             </if>
-            <if test="null != subSystemId and '' != subSystemId">
+            <if test="null != subSystemId">
                 sub_system_id,
             </if>
             <if test="null != strobeState and '' != strobeState">
@@ -208,13 +208,13 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="null != devId and '' != devId">
+            <if test="null != devId">
                 #{devId},
             </if>
-            <if test="null != devChnid and '' != devChnid">
+            <if test="null != devChnid">
                 #{devChnid},
             </if>
-            <if test="null != devChnnum and '' != devChnnum">
+            <if test="null != devChnnum">
                 #{devChnnum},
             </if>
             <if test="null != devName and '' != devName">
@@ -226,7 +226,7 @@
             <if test="null != carNum and '' != carNum">
                 #{carNum},
             </if>
-            <if test="null != carNumtype and '' != carNumtype">
+            <if test="null != carNumtype">
                 #{carNumtype},
             </if>
             <if test="null != carNumcolor and '' != carNumcolor">
@@ -235,16 +235,16 @@
             <if test="null != carSpeed and '' != carSpeed">
                 #{carSpeed},
             </if>
-            <if test="null != carType and '' != carType">
+            <if test="null != carType">
                 #{carType},
             </if>
             <if test="null != carColor and '' != carColor">
                 #{carColor},
             </if>
-            <if test="null != carLength and '' != carLength">
+            <if test="null != carLength">
                 #{carLength},
             </if>
-            <if test="null != carDirect and '' != carDirect">
+            <if test="null != carDirect">
                 #{carDirect},
             </if>
             <if test="null != carWayCode and '' != carWayCode">
@@ -292,19 +292,19 @@
             <if test="null != parkingLotCode and '' != parkingLotCode">
                 #{parkingLotCode},
             </if>
-            <if test="null != enterId and '' != enterId">
+            <if test="null != enterId">
                 #{enterId},
             </if>
-            <if test="null != parkingCarType and '' != parkingCarType">
+            <if test="null != parkingCarType">
                 #{parkingCarType},
             </if>
-            <if test="null != parkingCarSubType and '' != parkingCarSubType">
+            <if test="null != parkingCarSubType">
                 #{parkingCarSubType},
             </if>
             <if test="null != parkingCarCbirfeature and '' != parkingCarCbirfeature">
                 #{parkingCarCbirfeature},
             </if>
-            <if test="null != vehicleHeadDirection and '' != vehicleHeadDirection">
+            <if test="null != vehicleHeadDirection">
                 #{vehicleHeadDirection},
             </if>
             <if test="null != parkingCarColor and '' != parkingCarColor">
@@ -316,7 +316,7 @@
             <if test="null != subSystemIp and '' != subSystemIp">
                 #{subSystemIp},
             </if>
-            <if test="null != subSystemId and '' != subSystemId">
+            <if test="null != subSystemId">
                 #{subSystemId},
             </if>
             <if test="null != strobeState and '' != strobeState">

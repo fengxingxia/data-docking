@@ -33,4 +33,6 @@ public class FcjnOpenGateRecord {
 
     private String TcmName;
 
+    private Integer InOrOut;
+
 }
