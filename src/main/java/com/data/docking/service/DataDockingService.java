@@ -85,7 +85,7 @@ public class DataDockingService {
         // 更新同步记录
         if (Objects.isNull(dataDockingRecord)) {
             dataDockingRecordMapper.insert(createDataDocking(0L, currentSynNum, BusinessTypeConstant.SWING_CARD_RECORD, syncPosition));
-        } else {
+        } else if (!CollectionUtils.isEmpty(fcjnOpenGateRecords)) {
             syncPosition = String.valueOf(fcjnOpenGateRecords.get(fcjnOpenGateRecords.size() - 1).getId());
             dataDockingRecordMapper.update(createDataDocking(dataDockingRecord.getId(), currentSynNum,
                     BusinessTypeConstant.SWING_CARD_RECORD, syncPosition));
@@ -163,7 +163,7 @@ public class DataDockingService {
         // 更新同步记录
         if (Objects.isNull(dataDockingRecord)) {
             dataDockingRecordMapper.insert(createDataDocking(0L, currentSynNum, BusinessTypeConstant.CAR_CAPTURE_OUT, syncPosition));
-        } else {
+        } else if(!CollectionUtils.isEmpty(fcjnCarOutVehicles)) {
             syncPosition = String.valueOf(fcjnCarOutVehicles.get(fcjnCarOutVehicles.size() - 1).getId());
             dataDockingRecordMapper.update(createDataDocking(dataDockingRecord.getId(), currentSynNum,
                     BusinessTypeConstant.CAR_CAPTURE_OUT, syncPosition));
